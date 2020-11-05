@@ -1,0 +1,7 @@
+{
+    "require": {
+        "swiftmailer/swiftmailer": "6.*",
+        "twig/twig": "3.0",
+        "doctrine/dbal": "^2.12"
+    }
+}
