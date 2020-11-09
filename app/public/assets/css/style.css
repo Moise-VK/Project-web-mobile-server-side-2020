@@ -963,7 +963,6 @@ section {
 }
 
 .contact .php-email-form .error-message {
-  display: none;
   color: #fff;
   background: #ed3c0d;
   text-align: left;
@@ -1041,6 +1040,11 @@ section {
 .contact .php-email-form button[type="submit"]:hover {
   background: #5777ba;
   color: #fff;
+}
+
+.errorMsg{
+    font-size: 0.75rem;
+    color: red;
 }
 
 @media (max-width: 1024px) {

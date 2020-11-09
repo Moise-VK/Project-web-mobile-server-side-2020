@@ -54,25 +54,25 @@
                     <form action="contact.php" method="POST" novalidate="" role="form" class="php-email-form" data-aos="fade-up">
                         <div class="form-group">
                             <input placeholder="Your Name" type="text" name="name" class="form-control" id="name" value="{% if not errName and name != ''%}{{name}}{% endif %}"/>
-                            {% if errName %}<div class="validate">
+                            {% if errName  %}<div class="errorMsg">
                                 Please fill in a name
                             </div>{% endif %}
                         </div>
                         <div class="form-group">
                             <input placeholder="Your Email" type="email" class="form-control" name="email" id="email" value="{% if not errEmail and email != ''%}{{email}}{% endif %}"/>
-                            {% if errEmail %}<div class="validate">
+                            {% if errEmail %}<div class="errorMsg">
                                 Please fill in an email-address
                             </div>{% endif %}
                         </div>
                         <div class="form-group">
                             <input placeholder="Subject" type="text" class="form-control" name="subject" id="subject" value="{% if not errSubject and subject != ''%}{{subject}}{% endif %}"/>
-                            {% if errSubject %}<div class="validate">
+                            {% if errSubject %}<div class="error">
                                 Please fill in a subject
                             </div>{% endif %}
                         </div>
                         <div class="form-group">
                             <textarea placeholder="Message" class="form-control" name="message" rows="5" value="{% if not errMessage and message != ''%}{{message}}{% endif %}"></textarea>
-                            {% if errMessage %}<div class="validate">
+                            {% if errMessage %}<div class="error">
                                 Please fill in a message
                             </div>{% endif %}
                         </div>
