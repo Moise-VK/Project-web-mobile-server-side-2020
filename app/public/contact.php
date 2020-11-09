@@ -23,37 +23,38 @@
     $checkFilled = 0;
 
 
-    if (isset($_GET['name']) && $_GET['name'] != ''){
-        $name = $_GET['name'];
+    if (isset($_POST['name']) && $_POST['name'] !== ''){
+        $name = $_POST['name'];
         $checkFilled++;
     }
-    elseif (isset($_GET['name']) && $_GET['name'] == ''){
+    elseif (isset($_POST['name']) && $_POST['name'] == ''){
         $errName = true;
     }
 
-    if (isset($_GET['email']) && $_GET['email'] != ''){
-        $email = $_GET['email'];
+    if (isset($_POST['email']) && $_POST['email'] !== ''){
+        $email = $_POST['email'];
         $checkFilled++;
     }
-    elseif (isset($_GET['email']) && $_GET['email'] == ''){
+    elseif (isset($_POST['email']) && $_POST['email'] == ''){
         $errEmail = true;
     }
 
-    if (isset($_GET['subject']) && $_GET['subject'] != ''){
-        $subject = $_GET['subject'];
+    if (isset($_POST['subject']) && $_POST['subject'] !== ''){
+        $subject = $_POST['subject'];
         $checkFilled++;
     }
-    elseif (isset($_GET['subject']) && $_GET['subject'] == ''){
+    elseif (isset($_POST['subject']) && $_POST['subject'] == ''){
         $errSubject = true;
     }
 
-    if (isset($_GET['message']) && $_GET['message'] != ''){
-        $message = $_GET['message'];
+    if (isset($_POST['message']) && $_POST['message'] !== ''){
+        $message = $_POST['message'];
         $checkFilled++;
     }
-    elseif (isset($_GET['message']) && $_GET['message'] == ''){
+    elseif (isset($_POST['message']) && $_POST['message'] == ''){
         $errMessage = true;
     }
+    
 
     // View
     $tpl = $twig->load('/pages/contact.twig');
