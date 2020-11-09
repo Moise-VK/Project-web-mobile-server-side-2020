@@ -54,9 +54,7 @@
     elseif (isset($_POST['message']) && $_POST['message'] == ''){
         $errMessage = true;
     }
-
     if ($checkFilled == 4){
-        echo 'woohoo gelukt'; die;
     }
     // View
     $tpl = $twig->load('/pages/contact.twig');
