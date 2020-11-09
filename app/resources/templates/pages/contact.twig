@@ -51,29 +51,37 @@
                 </div>
 
                 <div class="col-lg-6">
-                    <form action="forms/contact.php" method="post" role="form" class="php-email-form" data-aos="fade-up">
+                    <form action="forms/contact.php" method="GET" novalidate="" role="form" class="php-email-form" data-aos="fade-up">
                         <div class="form-group">
-                            <input placeholder="Your Name" type="text" name="name" class="form-control" id="name" data-rule="minlen:4" data-msg="Please enter at least 4 chars" />
-                            <div class="validate"></div>
+                            <input placeholder="Your Name" type="text" name="name" class="form-control" id="name" value="{% if not errName %}{{name}}{% endif %}"/>
+                            {% if errName %}<div class="validate">
+                                Please fill in a name
+                            </div>{% endif %}
                         </div>
                         <div class="form-group">
-                            <input placeholder="Your Email" type="email" class="form-control" name="email" id="email" data-rule="email" data-msg="Please enter a valid email" />
-                            <div class="validate"></div>
+                            <input placeholder="Your Email" type="email" class="form-control" name="email" id="email" value="{% if not errEmail %}{{email}}{% endif %}"/>
+                            {% if errEmail %}<div class="validate">
+                                Please fill in an email-address
+                            </div>{% endif %}
                         </div>
                         <div class="form-group">
-                            <input placeholder="Subject" type="text" class="form-control" name="subject" id="subject" data-rule="minlen:4" data-msg="Please enter at least 8 chars of subject" />
-                            <div class="validate"></div>
+                            <input placeholder="Subject" type="text" class="form-control" name="subject" id="subject" value="{% if not errSubject %}{{subject}}{% endif %}"/>
+                            {% if errSubject %}<div class="validate">
+                                Please fill in a subject
+                            </div>{% endif %}
                         </div>
                         <div class="form-group">
-                            <textarea placeholder="Message" class="form-control" name="message" rows="5" data-rule="required" data-msg="Please write something for us"></textarea>
-                            <div class="validate"></div>
+                            <textarea placeholder="Message" class="form-control" name="message" rows="5" value="{% if not errMessage %}{{message}}{% endif %}"></textarea>
+                            {% if errMessage %}<div class="validate">
+                                Please fill in a message
+                            </div>{% endif %}
                         </div>
                         <div class="mb-3">
                             <div class="loading">Loading</div>
-                            <div class="error-message"></div>
-                            <div class="sent-message">Your message has been sent. Thank you!</div>
+                            {% if filled > 0 and filled < 4 %}<div class="error-message"></div> {% endif %}
+                            {% if filled == 4 %}<div class="sent-message">Your message has been sent. Thank you!</div> {% endif %}
                         </div>
-                        <div class="text-center"><button type="submit">Send Message</button></div>
+                        <div class="text-center"><button value="submit" name="submit" type="submit">Send Message</button></div>
                     </form>
                 </div>
 
