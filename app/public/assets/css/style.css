@@ -954,28 +954,43 @@ section {
   width: 100%;
 }
 
-.contact .php-email-form .validate {
-  display: none;
+.contact .php-email-form .errorMsg {
+  display: block;
   color: red;
   margin: 0;
   font-weight: 400;
   font-size: 13px;
 }
+/*.contact .php-email-form .form-group .errorMsg {
+    color: #ed3c0d;
+    display: block;
+    margin: 0;
+    font-weight: 400;
+    font-size: 13px;
+}*/
+
+.error-message{
+    display: block;
+    color: #ed3c0d;
+    /*background: #ed3c0d;*/
+    text-align: left;
+    padding: 15px;
+    font-weight: 600;
+    margin-top: 25px;
+}
 
 .contact .php-email-form .error-message {
+    display: block;
   color: #fff;
   background: #ed3c0d;
   text-align: left;
   padding: 15px;
   font-weight: 600;
-}
-
-.contact .php-email-form .error-message br + br {
-  margin-top: 25px;
+    margin-top: 25px;
 }
 
 .contact .php-email-form .sent-message {
-  display: none;
+  display: block;
   color: #fff;
   background: #18d26e;
   text-align: center;
@@ -1040,11 +1055,6 @@ section {
 .contact .php-email-form button[type="submit"]:hover {
   background: #5777ba;
   color: #fff;
-}
-
-.errorMsg{
-    font-size: 0.75rem;
-    color: red;
 }
 
 @media (max-width: 1024px) {
