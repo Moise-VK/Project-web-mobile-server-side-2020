@@ -21,6 +21,7 @@
     $errMessage = false;
 
     $checkFilled = 0;
+    $filled = true;
 
 
     if (isset($_POST['name']) && $_POST['name'] !== ''){
@@ -29,6 +30,7 @@
     }
     elseif (isset($_POST['name']) && $_POST['name'] == ''){
         $errName = true;
+        $filled = false;
     }
 
     if (isset($_POST['email']) && $_POST['email'] !== ''){
@@ -37,6 +39,7 @@
     }
     elseif (isset($_POST['email']) && $_POST['email'] == ''){
         $errEmail = true;
+        $filled = false;
     }
 
     if (isset($_POST['subject']) && $_POST['subject'] !== ''){
@@ -45,6 +48,7 @@
     }
     elseif (isset($_POST['subject']) && $_POST['subject'] == ''){
         $errSubject = true;
+        $filled = false;
     }
 
     if (isset($_POST['message']) && $_POST['message'] !== ''){
@@ -53,8 +57,10 @@
     }
     elseif (isset($_POST['message']) && $_POST['message'] == ''){
         $errMessage = true;
+        $filled = false;
     }
     if ($checkFilled == 4){
+        $filled = true;
     }
     // View
     $tpl = $twig->load('/pages/contact.twig');
@@ -67,6 +73,7 @@
         'errEmail' => $errEmail,
         'errSubject' => $errSubject,
         'errMessage' => $errMessage,
-        'filled' => $checkFilled
+        'filled' => $filled,
+        'checkFilled' => $checkFilled
     ]);
 
