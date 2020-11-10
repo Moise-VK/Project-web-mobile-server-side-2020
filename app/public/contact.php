@@ -23,6 +23,25 @@
     $checkFilled = 0;
     $filled = true;
 
+    function composeMailText(string $name, string $email, string $subject, string $message) : string{
+        $message = "Contactform entry" . PHP_EOL . PHP_EOL;
+        $message .= "Name: " . $name . PHP_EOL . PHP_EOL;
+        $message .= "Email: " . $email . PHP_EOL . PHP_EOL;
+        $message .= "Subject: " . $subject . PHP_EOL . PHP_EOL;
+        $message .= "Message: " . $message . PHP_EOL . PHP_EOL;
+        return $message;
+    }
+
+    function sendMessage(string $name, string $email, string $subject, string $message) : bool{
+        if($name && $email && $subject && $message){
+            mail("jonathan@jon-it.be", 'contact-form' , composeMailText($name, $email, $subject, $message));
+            mail($email, 'contact-form details' , composeMailText($name, $email, $subject, $message));
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
     if (isset($_POST['name']) && $_POST['name'] !== ''){
         $name = $_POST['name'];
@@ -60,7 +79,9 @@
         $filled = false;
     }
     if ($checkFilled == 4){
-        $filled = true;
+        if(sendMessage($name, $email, $subject, $message) == true){
+            $filled = true;
+        }
     }
     // View
     $tpl = $twig->load('/pages/contact.twig');
