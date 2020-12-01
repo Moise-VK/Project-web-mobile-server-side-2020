@@ -1,111 +1,109 @@
--- MySQL dump 10.13  Distrib 8.0.15, for macos10.14 (x86_64)
---
--- Host: 127.0.0.1    Database: ticketsdb
--- ------------------------------------------------------
--- Server version	8.0.15
+-- MySQL Workbench Forward Engineering
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
- SET NAMES utf8 ;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
---
--- Table structure for table `evenementen`
---
+-- -----------------------------------------------------
+-- Schema ticketsdb
+-- -----------------------------------------------------
 
-DROP TABLE IF EXISTS `evenementen`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
-CREATE TABLE `evenementen` (
-  `event_id` int(11) NOT NULL AUTO_INCREMENT,
-  `naam` varchar(45) NOT NULL,
-  `standaard _ticketprijs` decimal(10,0) NOT NULL,
-  `aanvangstijd` datetime NOT NULL,
-  `sluitingstijd` datetime NOT NULL,
-  `locatie` varchar(45) NOT NULL,
-  `beschrijving` text NOT NULL,
-  `aanwezige_artiesten` varchar(45) NOT NULL,
-  PRIMARY KEY (`event_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+-- -----------------------------------------------------
+-- Schema ticketsdb
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `ticketsdb` DEFAULT CHARACTER SET utf8 ;
+USE `ticketsdb` ;
 
---
--- Dumping data for table `evenementen`
---
+-- -----------------------------------------------------
+-- Table `ticketsdb`.`events`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `ticketsdb`.`events` (
+  `event_id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  `ticketprice_standard` DECIMAL NOT NULL,
+  `begin_time` DATETIME NOT NULL,
+  `end_time` DATETIME NOT NULL,
+  `location` VARCHAR(255) NOT NULL,
+  `description` TEXT(255) NOT NULL,
+  PRIMARY KEY (`event_id`))
+ENGINE = InnoDB;
 
-LOCK TABLES `evenementen` WRITE;
-/*!40000 ALTER TABLE `evenementen` DISABLE KEYS */;
-/*!40000 ALTER TABLE `evenementen` ENABLE KEYS */;
-UNLOCK TABLES;
 
---
--- Table structure for table `tickets`
---
+-- -----------------------------------------------------
+-- Table `ticketsdb`.`sellers`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `ticketsdb`.`sellers` (
+  `seller_id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  `last_name` VARCHAR(45) NOT NULL,
+  `friends_invited` INT NULL,
+  `tickets_sold` INT NULL,
+  PRIMARY KEY (`seller_id`))
+ENGINE = InnoDB;
 
-DROP TABLE IF EXISTS `tickets`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
-CREATE TABLE `tickets` (
-  `ticket_id` int(11) NOT NULL,
-  `naam` varchar(45) NOT NULL,
-  `prijs_per_ticket` float NOT NULL,
-  `aantal` int(11) NOT NULL,
-  `Reden van verkoop` varchar(45) NOT NULL,
-  `event_id` int(11) NOT NULL,
-  `verkoper_id` int(11) NOT NULL,
+
+-- -----------------------------------------------------
+-- Table `ticketsdb`.`tickets`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `ticketsdb`.`tickets` (
+  `ticket_id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  `ticket_price` FLOAT NOT NULL,
+  `amount` INT NOT NULL,
+  `sale_reason` VARCHAR(45) NOT NULL,
+  `event_id` INT NOT NULL,
+  `seller_id` INT NOT NULL,
   PRIMARY KEY (`ticket_id`),
-  KEY `fk_tickets_evenementen_idx` (`event_id`),
-  KEY `fk_tickets_verkopers1_idx` (`verkoper_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  INDEX `fk_tickets_evenementen_idx` (`event_id` ASC) VISIBLE,
+  INDEX `fk_tickets_verkopers1_idx` (`seller_id` ASC) VISIBLE,
+  CONSTRAINT `fk_tickets_evenementen`
+    FOREIGN KEY (`event_id`)
+    REFERENCES `ticketsdb`.`events` (`event_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_tickets_verkopers1`
+    FOREIGN KEY (`seller_id`)
+    REFERENCES `ticketsdb`.`sellers` (`seller_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
 
---
--- Dumping data for table `tickets`
---
 
-LOCK TABLES `tickets` WRITE;
-/*!40000 ALTER TABLE `tickets` DISABLE KEYS */;
-/*!40000 ALTER TABLE `tickets` ENABLE KEYS */;
-UNLOCK TABLES;
+-- -----------------------------------------------------
+-- Table `ticketsdb`.`artists`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `ticketsdb`.`artists` (
+  `artist_id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  `description` VARCHAR(255) NOT NULL,
+  `age` VARCHAR(45) NOT NULL,
+  `country` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`artist_id`))
+ENGINE = InnoDB;
 
---
--- Table structure for table `verkopers`
---
 
-DROP TABLE IF EXISTS `verkopers`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
-CREATE TABLE `verkopers` (
-  `verkoper_id` int(11) NOT NULL,
-  `voornaam` varchar(45) NOT NULL,
-  `achternaam` varchar(45) NOT NULL,
-  `vrienden_uitgenodigd` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`verkoper_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+-- -----------------------------------------------------
+-- Table `ticketsdb`.`events_has_artists`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `ticketsdb`.`events_has_artists` (
+  `events_event_id` INT NOT NULL,
+  `artists_artist_id` INT NOT NULL,
+  PRIMARY KEY (`events_event_id`, `artists_artist_id`),
+  INDEX `fk_events_has_artists_artists1_idx` (`artists_artist_id` ASC) VISIBLE,
+  INDEX `fk_events_has_artists_events1_idx` (`events_event_id` ASC) VISIBLE,
+  CONSTRAINT `fk_events_has_artists_events1`
+    FOREIGN KEY (`events_event_id`)
+    REFERENCES `ticketsdb`.`events` (`event_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_events_has_artists_artists1`
+    FOREIGN KEY (`artists_artist_id`)
+    REFERENCES `ticketsdb`.`artists` (`artist_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
 
---
--- Dumping data for table `verkopers`
---
 
-LOCK TABLES `verkopers` WRITE;
-/*!40000 ALTER TABLE `verkopers` DISABLE KEYS */;
-/*!40000 ALTER TABLE `verkopers` ENABLE KEYS */;
-UNLOCK TABLES;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
-
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
--- Dump completed on 2020-11-09 17:43:23
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
