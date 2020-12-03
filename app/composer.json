@@ -1,7 +1,12 @@
 {
-    "require": {
-        "swiftmailer/swiftmailer": "6.*",
-        "twig/twig": "3.0",
-        "doctrine/dbal": "^2.12"
-    }
+  "autoload": {
+    "classmap": ["src/models/"],
+    "files": ["config/database.php", "src/functions.php"]
+  },
+  "require": {
+    "swiftmailer/swiftmailer": "6.*",
+    "doctrine/dbal": "^2.12",
+    "twig/twig": "^3.0",
+    "bramus/router": "~1.5"
+  }
 }

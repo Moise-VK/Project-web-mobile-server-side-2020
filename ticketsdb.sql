@@ -20,7 +20,7 @@ USE `ticketsdb` ;
 CREATE TABLE IF NOT EXISTS `ticketsdb`.`events` (
   `event_id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
-  `ticketprice_standard` DECIMAL NOT NULL,
+  `ticketprice_standard` FLOAT NOT NULL,
   `begin_time` DATETIME NOT NULL,
   `end_time` DATETIME NOT NULL,
   `location` VARCHAR(255) NOT NULL,
@@ -30,15 +30,37 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `ticketsdb`.`sellers`
+-- Table `ticketsdb`.`users`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `ticketsdb`.`sellers` (
-  `seller_id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NOT NULL,
-  `last_name` VARCHAR(45) NOT NULL,
-  `friends_invited` INT NULL,
-  `tickets_sold` INT NULL,
-  PRIMARY KEY (`seller_id`))
+CREATE TABLE IF NOT EXISTS `ticketsdb`.`users` (
+  `user_id` INT NOT NULL AUTO_INCREMENT,
+  `email` VARCHAR(100) NOT NULL,
+  `password` CHAR(60) NOT NULL,
+  PRIMARY KEY (`user_id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `ticketsdb`.`transactions`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `ticketsdb`.`transactions` (
+  `transaction_id` INT NOT NULL AUTO_INCREMENT,
+  `date_transaction` DATETIME NOT NULL,
+  `seller_id` INT NOT NULL,
+  `buyer_id` INT NULL,
+  PRIMARY KEY (`transaction_id`),
+  INDEX `fk_transactions_users1_idx` (`seller_id` ASC),
+  INDEX `fk_transactions_users2_idx` (`buyer_id` ASC),
+  CONSTRAINT `fk_transactions_users1`
+    FOREIGN KEY (`seller_id`)
+    REFERENCES `ticketsdb`.`users` (`user_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_transactions_users2`
+    FOREIGN KEY (`buyer_id`)
+    REFERENCES `ticketsdb`.`users` (`user_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
@@ -52,18 +74,18 @@ CREATE TABLE IF NOT EXISTS `ticketsdb`.`tickets` (
   `amount` INT NOT NULL,
   `sale_reason` VARCHAR(45) NOT NULL,
   `event_id` INT NOT NULL,
-  `seller_id` INT NOT NULL,
+  `transaction_id` INT NOT NULL,
   PRIMARY KEY (`ticket_id`),
-  INDEX `fk_tickets_evenementen_idx` (`event_id` ASC) VISIBLE,
-  INDEX `fk_tickets_verkopers1_idx` (`seller_id` ASC) VISIBLE,
-  CONSTRAINT `fk_tickets_evenementen`
+  INDEX `fk_tickets_events1_idx` (`event_id` ASC),
+  INDEX `fk_tickets_transactions1_idx` (`transaction_id` ASC),
+  CONSTRAINT `fk_tickets_events1`
     FOREIGN KEY (`event_id`)
     REFERENCES `ticketsdb`.`events` (`event_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_tickets_verkopers1`
-    FOREIGN KEY (`seller_id`)
-    REFERENCES `ticketsdb`.`sellers` (`seller_id`)
+  CONSTRAINT `fk_tickets_transactions1`
+    FOREIGN KEY (`transaction_id`)
+    REFERENCES `ticketsdb`.`transactions` (`transaction_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -86,19 +108,42 @@ ENGINE = InnoDB;
 -- Table `ticketsdb`.`events_has_artists`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `ticketsdb`.`events_has_artists` (
-  `events_event_id` INT NOT NULL,
-  `artists_artist_id` INT NOT NULL,
-  PRIMARY KEY (`events_event_id`, `artists_artist_id`),
-  INDEX `fk_events_has_artists_artists1_idx` (`artists_artist_id` ASC) VISIBLE,
-  INDEX `fk_events_has_artists_events1_idx` (`events_event_id` ASC) VISIBLE,
+  `event_id` INT NOT NULL,
+  `artist_id` INT NOT NULL,
+  PRIMARY KEY (`event_id`, `artist_id`),
+  INDEX `fk_events_has_artists_artists1_idx` (`artist_id` ASC),
+  INDEX `fk_events_has_artists_events1_idx` (`event_id` ASC),
   CONSTRAINT `fk_events_has_artists_events1`
-    FOREIGN KEY (`events_event_id`)
+    FOREIGN KEY (`event_id`)
     REFERENCES `ticketsdb`.`events` (`event_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_events_has_artists_artists1`
-    FOREIGN KEY (`artists_artist_id`)
+    FOREIGN KEY (`artist_id`)
     REFERENCES `ticketsdb`.`artists` (`artist_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `ticketsdb`.`user_data`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `ticketsdb`.`user_data` (
+  `user_id` INT NOT NULL,
+  `name` VARCHAR(45) NOT NULL,
+  `last_name` VARCHAR(45) NOT NULL,
+  `friends_invited` INT NULL,
+  `tickets_sold` INT NULL,
+  `tickets_bought` VARCHAR(45) NULL,
+  `address` VARCHAR(45) NOT NULL,
+  `city` VARCHAR(45) NOT NULL,
+  `country` VARCHAR(45) NOT NULL,
+  INDEX `fk_user_data_users1_idx` (`user_id` ASC),
+  PRIMARY KEY (`user_id`),
+  CONSTRAINT `fk_user_data_users1`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `ticketsdb`.`users` (`user_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
