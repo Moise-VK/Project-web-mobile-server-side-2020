@@ -3,15 +3,22 @@
     // General variables
     $basePath = __DIR__ . '/../';
 
-    require_once __DIR__ . '/../vendor/autoload.php';
-
-    $loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/../resources/templates');
-    $twig = new \Twig\Environment($loader);
-
-
     // Data
 
+    require_once $basePath . 'vendor/autoload.php';
 
-    // View
-    $tpl = $twig->load('/pages/index.twig');
-    echo $tpl->render();
+    //Twig dependencies
+    $loader = new \Twig\Loader\FilesystemLoader($basePath . '/resources/templates');
+    $twig = new \Twig\Environment($loader);
+
+    // Create Router instance
+    $router = new \Bramus\Router\Router();
+
+    // Define routes
+    $router->get('/', 'IndexController@view');
+    $router->get('home', 'IndexController@view');
+    $router->get('contact', 'ContactController@view');
+    $router->post('contact', 'ContactController@sendMail');
+
+    // Run it!
+    $router->run();

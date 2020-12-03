@@ -1,5 +1,6 @@
-{% include 'layout/parts/header.twig' %}
+{% extends 'pages/layout.twig' %}
 
+{% block pageContent %}
   <section id="hero" class="d-flex align-items-center">
 
     <div class="container">
@@ -397,15 +398,6 @@
       </div>
     </section><!-- End Frequently Asked Questions Section -->
 
-    <!-- ======= Contact Section ======= -->
-    <section id="contact" class="contact">
-      <div class="container">
-
-
-
-      </div>
-    </section><!-- End Contact Section -->
-
   </main><!-- End #main -->
 
-{% include 'layout/parts/footer.twig' %}
+{% endblock %}
