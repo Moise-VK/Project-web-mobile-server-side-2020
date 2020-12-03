@@ -1,0 +1,33 @@
+{% extends 'pages/layout.twig' %}
+
+{% block pageContent %}
+<main id="main">
+
+    <!-- ======= Breadcrumbs Section ======= -->
+    <section class="breadcrumbs">
+        <div class="container">
+
+            <div class="d-flex justify-content-between align-items-center">
+                <h2>Events</h2>
+                <ol>
+                    <li><a href="home">Home</a></li>
+                    <li>Events</li>
+                </ol>
+            </div>
+
+        </div>
+    </section><!-- End Breadcrumbs Section -->
+    <section>
+        {% for event in events %}
+            <article class="6u 12u$(xsmall) work-item"  style="height: 25em;">
+                <a href="../assets/img/{{event.getId}}.png" class=""><img src="../assets/img/{{event.getId}}.png" title="{{event.getName}}" /></a>
+                <h3>{{event.getName}}</h3>
+                <p>{{event.getDescr}}</p>
+                <p class="icon fa-user">&nbsp;{{pic.getLink}}</p>
+                <p class="icon fa-camera-retro">&nbsp;{{pic.getDate}}</p>
+            </article>
+        {% endfor %}
+    </section>
+</main><!-- End #main -->
+
+{% endblock %}

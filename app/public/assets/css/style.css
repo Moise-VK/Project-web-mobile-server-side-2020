@@ -1257,6 +1257,7 @@ section {
   color: #47536e;
 }
 
+
 @media (max-width: 768px) {
   #footer .copyright, #footer .credits {
     float: none;

@@ -19,6 +19,7 @@
     $router->get('home', 'IndexController@view');
     $router->get('contact', 'ContactController@view');
     $router->post('contact', 'ContactController@sendMail');
+    $router->get('events', 'ShowEventController@view');
 
     // Run it!
     $router->run();
