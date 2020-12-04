@@ -18,15 +18,21 @@
         </div>
     </section><!-- End Breadcrumbs Section -->
     <section>
-        {% for event in events %}
+        {% if companies|length !=  0 %}
+            {% for event in events %}
+                <article class="6u 12u$(xsmall) work-item"  style="height: 25em;">
+                    <a href="../assets/img/{{event.getId}}.png" class=""><img src="../assets/img/{{event.getId}}.png" title="{{event.getName}}" /></a>
+                    <h3>{{event.getName}}</h3>
+                    <p>{{event.getDescr}}</p>
+                    <p class="icon fa-user">&nbsp;{{pic.getLink}}</p>
+                    <p class="icon fa-camera-retro">&nbsp;{{pic.getDate}}</p>
+                </article>
+            {% endfor %}
+        {% else %}
             <article class="6u 12u$(xsmall) work-item"  style="height: 25em;">
-                <a href="../assets/img/{{event.getId}}.png" class=""><img src="../assets/img/{{event.getId}}.png" title="{{event.getName}}" /></a>
-                <h3>{{event.getName}}</h3>
-                <p>{{event.getDescr}}</p>
-                <p class="icon fa-user">&nbsp;{{pic.getLink}}</p>
-                <p class="icon fa-camera-retro">&nbsp;{{pic.getDate}}</p>
+                <p class="noevent">Geen evenementen gevonden</p>
             </article>
-        {% endfor %}
+        {% endif %}
     </section>
 </main><!-- End #main -->
 

@@ -1,6 +1,6 @@
 .DS_Store
 .idea
-/opgaven
 /app/vendor
-/mysql-data
 /app/saves
+/mysql-data
+mysql-data/
