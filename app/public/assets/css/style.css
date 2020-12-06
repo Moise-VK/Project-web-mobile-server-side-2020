@@ -1265,3 +1265,12 @@ section {
     padding: 5px 0;
   }
 }
+
+.event a img{
+    height: 15rem;
+    width: 15rem;
+}
+
+.event .details ul{
+
+}

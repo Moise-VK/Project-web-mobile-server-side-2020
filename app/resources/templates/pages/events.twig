@@ -17,23 +17,44 @@
 
         </div>
     </section><!-- End Breadcrumbs Section -->
-    <section>
-        {% if companies|length !=  0 %}
-            {% for event in events %}
+    <div class="d-flex">
+        <section class="col-lg-2">
+            <!-- FILTERS GO HERE -->
+            {% include 'layout/parts/eventFilters.twig' %}
+        </section>
+        <section class="col-lg-2"></section>
+        <section class="col-lg-7">
+            {% if events|length !=  0 %}
+                {% for event in events %}
+                    <article class="card mt-4">
+                        <div class="card-header">
+                            <a href="/event/{{ event.getId() }}"><h4 class="title">{{ event.getName() }}</h4></a>
+                        </div>
+                        <div class="card-body d-flex">
+                            <div class="col-lg-4">
+                                <a href="/event/{{ event.getId() }}"><img class="img-thumbnail" src="../assets/img/{{ event.getId() }}.jpg" alt="{{ event.getId() }}" title="{{ event.getId() }}" /></a>
+                            </div>
+                            <div class="col-lg-4"></div>
+                            <div class="col-lg-4">
+                                <ul class="list-unstyled">
+                                    <li><h5><a href="/event/{{ event.getId() }}">{{ event.getName() }}</a></h5></li>
+                                    <li>Price: € {{ event.getPrice() }}</li>
+                                    <li>Start: {{ event.getStartDate() }}</li>
+                                    <li>End: {{ event.getEndDate() }}</li>
+                                    <li>Location: {{ event.getLocation() }}</li>
+                                    <li><a class="btn btn-success" href="/event/{{ event.getId() }}">Show more</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </article>
+                {% endfor %}
+            {% else %}
                 <article class="6u 12u$(xsmall) work-item"  style="height: 25em;">
-                    <a href="../assets/img/{{event.getId}}.png" class=""><img src="../assets/img/{{event.getId}}.png" title="{{event.getName}}" /></a>
-                    <h3>{{event.getName}}</h3>
-                    <p>{{event.getDescr}}</p>
-                    <p class="icon fa-user">&nbsp;{{pic.getLink}}</p>
-                    <p class="icon fa-camera-retro">&nbsp;{{pic.getDate}}</p>
+                    <p class="noevent">Geen evenementen gevonden</p>
                 </article>
-            {% endfor %}
-        {% else %}
-            <article class="6u 12u$(xsmall) work-item"  style="height: 25em;">
-                <p class="noevent">Geen evenementen gevonden</p>
-            </article>
-        {% endif %}
-    </section>
+            {% endif %}
+        </section>
+    </div>
 </main><!-- End #main -->
 
 {% endblock %}
