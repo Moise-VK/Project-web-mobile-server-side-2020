@@ -5,6 +5,10 @@
         public function showLoginRegister(){
             $email = '';
 
+            if(isset($_SESSION['user'])){
+                $this->returnToOverview('home');
+            }
+
             if(isset($_COOKIE['email'])){
                 $email = $_COOKIE['email'];
             }
@@ -39,8 +43,30 @@
             }
         }
 
-        public function register(){
+        private function equalPasswords(string $password, string $repeatPassword) : bool {
+            if($password == $repeatPassword){
+                return true;
+            } else {
+                return false;
+            }
+        }
 
+        public function register(){
+            $email = isset($_POST['email']) && filter_var($_POST['email'], FILTER_VALIDATE_EMAIL) ? trim($_POST['email']) : '';
+            $password = isset($_POST['password']) ? trim($_POST['password']) : '';
+            $repeatPassword = isset($_POST['repeatPassword']) ? trim($_POST['repeatPassword']) : '';
+
+            if($email && $password && $this->equalPasswords($password, $repeatPassword) == true && isset($_POST['moduleAction']) && ($_POST['moduleAction'] == 'register')){
+                $stmt = $this->db->prepare('INSERT INTO users(email, password) VALUES(?,?)');
+                $stmt->execute([$email, password_hash($password, PASSWORD_DEFAULT)]);
+
+                //autoLogin after register
+                $_SESSION['user'] = $email;
+
+                $this->returnToOverview('home');
+            } else {
+                $this->returnToOverview('register?error=true&email=' . $email);
+            }
         }
 
         public function logout(){

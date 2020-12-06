@@ -14,6 +14,10 @@
     // Create Router instance
     $router = new \Bramus\Router\Router();
 
+    $router->before('GET|POST', '/.*', function () {
+        session_start();
+    });
+
     // Define routes
     $router->get('', 'IndexController@view');
     $router->get('home', 'IndexController@view');
@@ -27,6 +31,20 @@
     ///Register routes
     $router->get('register', 'AuthController@showLoginRegister');
     $router->post('register', 'AuthController@register');
+    //Logout routes
+    $router->get('logout', 'AuthController@logout');
+
+    $router->mount('/dashboard', function () use ($router){
+        $router->before('GET|POST', '/.*', function () {
+            if(!isset($_SESSION['user'])){
+                header('Location: /login');
+                exit();
+            }
+        });
+        //ALL ROUTES FOR USERACTIONS/ TRANSACTIONS/ ...
+    });
+
+    $router->set404('IndexController@view');
 
     // Run it!
     $router->run();
