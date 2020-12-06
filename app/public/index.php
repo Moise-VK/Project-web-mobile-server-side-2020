@@ -15,11 +15,18 @@
     $router = new \Bramus\Router\Router();
 
     // Define routes
-    $router->get('/', 'IndexController@view');
+    $router->get('', 'IndexController@view');
     $router->get('home', 'IndexController@view');
     $router->get('contact', 'ContactController@view');
     $router->post('contact', 'ContactController@sendMail');
     $router->get('events', 'ShowEventController@view');
+
+    //Login routes
+    $router->get('login', 'AuthController@showLoginRegister');
+    $router->post('login', 'AuthController@login');
+    ///Register routes
+    $router->get('register', 'AuthController@showLoginRegister');
+    $router->post('register', 'AuthController@register');
 
     // Run it!
     $router->run();

@@ -29,6 +29,10 @@ class BaseController
         $loader = new \Twig\Loader\FilesystemLoader($this->basePath . '/../../resources/templates');
         $this->twig = new \Twig\Environment($loader);
 
+    }
 
+    protected function returnToOverview(string $overview){
+        header("Location: /" . $overview);
+        exit();
     }
 }

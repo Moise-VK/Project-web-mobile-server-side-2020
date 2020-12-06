@@ -1,0 +1,25 @@
+<form action="/login" method="post">
+    <h1>Login</h1>
+    {% if error %}
+        <div class="error">
+            <p class="red">There might something wrong with your e-mailadress and/or password</p>
+        </div>
+    {% endif %}
+    <div>
+        <input type="text" class="form-control" placeholder="E-mailadress" value="{{ email }}" name="email" required="" />
+    </div>
+    <div>
+        <input type="password" class="form-control" placeholder="Password" name="password" required="" />
+    </div>
+    <div class="text-left">
+        <input type="checkbox" id="remember" name="remember">
+        <label for="remember">Remember my e-mailaddress</label>
+    </div>
+    <div>
+        <input type="hidden" name="moduleAction" value="login" />
+        <input type="submit" class="btn btn-success submit" value="Login">
+        <a class="reset_pass" href="#">Lost your password?</a>
+    </div>
+    <div class="clearfix"></div>
+
+</form>
