@@ -46,4 +46,8 @@
             return $this->date;
         }
 
+        public function __toString() : string {
+            return $this->id . ' ' . $this->name . ' ' . $this->price . ' ' . $this->location . ' ' . $this->description . ' ' . $this->link . ' ' . $this->date . PHP_EOL;
+        }
+
     }
