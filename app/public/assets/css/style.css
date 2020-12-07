@@ -1274,3 +1274,33 @@ section {
 .event .details ul{
 
 }
+.img-detail{
+    display: inline-block;!important;
+    height: 22.5rem; !important;
+    width:35rem; !important;
+    vertical-align: initial;
+}
+.event-info li{
+    display: inline-block; !important;
+    line-height: 2rem;
+}
+.event-info{
+    margin: auto;!important;
+}
+.detail-info{
+    position: relative; !important;
+    padding-left: 8rem; !important;
+    display: inline-block; !important;
+}
+.inline{
+    display: inline-block; !important;
+}
+.descr{
+    padding-top: 4rem;
+    position: relative; !important;
+    display: inline-block; !important;
+    line-height: 1.7rem;
+}
+
+
+

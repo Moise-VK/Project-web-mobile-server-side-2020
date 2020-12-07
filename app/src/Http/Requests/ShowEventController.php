@@ -1,16 +1,28 @@
 <?php
     class ShowEventController extends BaseController {
 
-        public function view () {
+        public function overview () {
             $events = $this->getEvents();
             echo $this->twig->render('/pages/events.twig', [
                 'events' => $this->getEvents()
             ]);
 
         }
+        public function detail () {
+            echo $this->twig->render('/pages/detailEvent.twig', [
+                'events' => $this->getEvents()
+            ]);
+
+        }
         private function getEvents() {
-            $getEvents = $this->db->prepare('SELECT * FROM events ORDER BY begin_time ASC');
-            $getEvents->execute();
+            if (isset($_GET['id'])){
+                $id = $_GET['id'];
+            }
+            else{
+                $id = '%';
+            }
+            $getEvents = $this->db->prepare('SELECT * FROM events WHERE event_id like ? ORDER BY begin_time ASC');
+            $getEvents->execute(array($id));
             return $this->convertArrayToEventModels($getEvents->fetchAllAssociative());
         }
         private function convertArrayToEventModels(array $events) : array {
@@ -31,6 +43,7 @@
         }
 
         private function convertArrayToModel(array $event) : Event {
+            require_once $this->basePath . '/../Models/Event.php';
             return new Event($event['event_id'], $event['name'], $event['ticketprice_standard'], $event['location'], $event['description'], $this->formatTime($event['begin_time']), $this->formatTime($event['end_time']));
         }
     }

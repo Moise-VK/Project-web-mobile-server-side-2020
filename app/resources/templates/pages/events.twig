@@ -17,7 +17,7 @@
 
         </div>
     </section><!-- End Breadcrumbs Section -->
-    <div class="d-flex">
+    <div class="d-flex ">
         <section class="col-lg-2">
             <!-- FILTERS GO HERE -->
             {% include 'layout/parts/eventFilters.twig' %}
@@ -37,12 +37,12 @@
                             <div class="col-lg-4"></div>
                             <div class="col-lg-4">
                                 <ul class="list-unstyled">
-                                    <li><h5><a href="/event/{{ event.getId() }}">{{ event.getName() }}</a></h5></li>
+                                    <li><h5><a href="/event?id={{ event.getId() }}">{{ event.getName() }}</a></h5></li>
                                     <li>Price: € {{ event.getPrice() }}</li>
                                     <li>Start: {{ event.getStartDate() }}</li>
                                     <li>End: {{ event.getEndDate() }}</li>
                                     <li>Location: {{ event.getLocation() }}</li>
-                                    <li><a class="btn btn-success" href="/event/{{ event.getId() }}">Show more</a></li>
+                                    <li><a class="btn btn-success" href="/event?id={{ event.getId() }}">Show more</a></li>
                                 </ul>
                             </div>
                         </div>
