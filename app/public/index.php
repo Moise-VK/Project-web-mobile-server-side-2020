@@ -23,6 +23,7 @@
     $router->get('home', 'IndexController@view');
     $router->get('contact', 'ContactController@view');
     $router->post('contact', 'ContactController@sendMail');
+    $router->get('event', 'EventController@detail');
 
     //Event routes
     $router->mount('/events', function () use ($router){

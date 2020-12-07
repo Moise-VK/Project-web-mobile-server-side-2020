@@ -1298,7 +1298,7 @@ section {
 .descr{
     padding-top: 4rem;
     position: relative; !important;
-    display: inline-block; !important;
+    display: block; !important;
     line-height: 1.7rem;
 }
 
