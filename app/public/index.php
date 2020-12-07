@@ -23,12 +23,16 @@
     $router->get('home', 'IndexController@view');
     $router->get('contact', 'ContactController@view');
     $router->post('contact', 'ContactController@sendMail');
-    $router->get('event/(\w+)', 'EventController@detail');
+
 
     //Event routes
     $router->mount('/events', function () use ($router){
         $router->get('', 'EventController@view');
         $router->get('search', 'EventController@search');
+    });
+
+    $router->mount('/event', function () use ($router){
+        $router->get('/(\w+)', 'EventController@detail');
     });
 
     /*
