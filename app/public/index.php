@@ -23,8 +23,13 @@
     $router->get('home', 'IndexController@view');
     $router->get('contact', 'ContactController@view');
     $router->post('contact', 'ContactController@sendMail');
-    $router->get('events', 'ShowEventController@overview');
-    $router->get('event', 'ShowEventController@detail');
+
+    //Event routes
+    $router->mount('/events', function () use ($router){
+        $router->get('', 'EventController@view');
+        $router->get('search', 'EventController@search');
+    });
+    //$router->get('events', 'EventController@view');
 
     //Login routes
     $router->get('login', 'AuthController@showLoginRegister');
@@ -34,7 +39,7 @@
     $router->post('register', 'AuthController@register');
     //Logout routes
     $router->get('logout', 'AuthController@logout');
-
+    /* Voorbeeld om routes te beveiligen
     $router->mount('/dashboard', function () use ($router){
         $router->before('GET|POST', '/.*', function () {
             if(!isset($_SESSION['user'])){
@@ -43,7 +48,7 @@
             }
         });
         //ALL ROUTES FOR USERACTIONS/ TRANSACTIONS/ ...
-    });
+    }); */
 
     $router->set404('IndexController@view');
 
