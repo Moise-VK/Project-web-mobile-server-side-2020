@@ -16,10 +16,13 @@ services:
     ports:
      - "3307:3306"
     volumes:
-     - "./mysql-data:/var/lib/mysql"
-     - "./mysql-sql/test.sql:/docker-entrypoint-initdb.d/dump.sql"
+     - "./mysql-sql:/docker-entrypoint-initdb.d"
     environment:
      - MYSQL_ROOT_PASSWORD=Azerty123
+     - MYSQL_USER=root
+     - MYSQL_password=Azerty123
+     - MYSQL_DATABASE=ticketswap
+
   myadmin:
     image: phpmyadmin/phpmyadmin
     container_name: phpmyadmin_project2
