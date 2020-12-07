@@ -20,6 +20,13 @@
                 'events' => $this->filterEvents($term, $location, $price)
             ]);
         }
+        public function detail () {
+            echo $this->twig->render('/pages/detailEvent.twig', [
+                'events' => $this->getEvents()
+            ]);
+
+        }
+
 
         private function getMinPrice() : int {
             $getEvents = $this->db->prepare('SELECT * FROM events ORDER BY ticketprice_standard ASC LIMIT 1');
@@ -45,8 +52,14 @@
         }
 
         private function getEvents() {
-            $getEvents = $this->db->prepare('SELECT * FROM events ORDER BY begin_time ASC');
-            $getEvents->execute();
+            if (isset($_GET['id'])){
+                $id = $_GET['id'];
+            }
+            else{
+                $id = '%';
+            }
+            $getEvents = $this->db->prepare('SELECT * FROM events WHERE event_id like ? ORDER BY begin_time ASC');
+            $getEvents->execute(array($id));
             return $this->convertArrayToEventModels($getEvents->fetchAllAssociative());
         }
 
