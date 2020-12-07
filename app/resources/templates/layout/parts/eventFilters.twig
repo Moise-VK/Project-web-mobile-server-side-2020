@@ -1,3 +1,30 @@
-<div class="border-1">
+<div class="">
     <h5>Filter events</h5>
+    <form action="/events/search" method="GET">
+        <div class="form-group">
+            <label for="term">Searchterm:</label>
+            <input type="text" name="term" class="form-control" id="term" placeholder="term" value="{{ term }}">
+        </div>
+
+        <div class="form-group">
+            <label for="term">Location:</label>
+            <select class="form-control" name="location" id="location">
+                {% for location in locations %}
+                    <option value="{{ location['location'] }}"> {{ location['location'] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="price">Price: <span>(max: <em id="priceInd"></em>)</span></label>
+            <input type="range" class="form-control" id="price" name="price" min="{{ minPrice }}" max="{{ maxPrice }}" value="{{ maxPrice }}" step="1">
+        </div>
+
+        <div class="form-group">
+            <input type="hidden" name="moduleAction" value="search-events" />
+            <input type="submit" value="Filter" class="btn btn-success" name="submit" />
+        </div>
+    </form>
 </div>
+
+
