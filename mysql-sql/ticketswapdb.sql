@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysqldb
--- Gegenereerd op: 07 dec 2020 om 18:24
+-- Gegenereerd op: 07 dec 2020 om 21:21
 -- Serverversie: 5.7.31
 -- PHP-versie: 7.4.9
 
@@ -18,8 +18,11 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `ticketsdb`
+-- Database: `ticketswap`
 --
+DROP DATABASE IF EXISTS `ticketswap`;
+CREATE DATABASE IF NOT EXISTS `ticketswap` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `ticketswap`;
 
 -- --------------------------------------------------------
 
@@ -27,6 +30,7 @@ SET time_zone = "+00:00";
 -- Tabelstructuur voor tabel `artists`
 --
 
+DROP TABLE IF EXISTS `artists`;
 CREATE TABLE `artists` (
   `artist_id` int(11) NOT NULL,
   `name` varchar(45) NOT NULL,
@@ -41,6 +45,7 @@ CREATE TABLE `artists` (
 -- Tabelstructuur voor tabel `events`
 --
 
+DROP TABLE IF EXISTS `events`;
 CREATE TABLE `events` (
   `event_id` int(11) NOT NULL,
   `name` varchar(45) NOT NULL,
@@ -70,6 +75,7 @@ INSERT INTO `events` (`event_id`, `name`, `ticketprice_standard`, `begin_time`, 
 -- Tabelstructuur voor tabel `events_has_artists`
 --
 
+DROP TABLE IF EXISTS `events_has_artists`;
 CREATE TABLE `events_has_artists` (
   `event_id` int(11) NOT NULL,
   `artist_id` int(11) NOT NULL
@@ -81,6 +87,7 @@ CREATE TABLE `events_has_artists` (
 -- Tabelstructuur voor tabel `tickets`
 --
 
+DROP TABLE IF EXISTS `tickets`;
 CREATE TABLE `tickets` (
   `ticket_id` int(11) NOT NULL,
   `name` varchar(45) NOT NULL,
@@ -97,6 +104,7 @@ CREATE TABLE `tickets` (
 -- Tabelstructuur voor tabel `transactions`
 --
 
+DROP TABLE IF EXISTS `transactions`;
 CREATE TABLE `transactions` (
   `transaction_id` int(11) NOT NULL,
   `date_transaction` datetime NOT NULL,
@@ -110,6 +118,7 @@ CREATE TABLE `transactions` (
 -- Tabelstructuur voor tabel `users`
 --
 
+DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `user_id` int(11) NOT NULL,
   `email` varchar(100) NOT NULL,
@@ -132,6 +141,7 @@ INSERT INTO `users` (`user_id`, `email`, `password`) VALUES
 -- Tabelstructuur voor tabel `user_data`
 --
 
+DROP TABLE IF EXISTS `user_data`;
 CREATE TABLE `user_data` (
   `user_id` int(11) NOT NULL,
   `name` varchar(45) NOT NULL,
