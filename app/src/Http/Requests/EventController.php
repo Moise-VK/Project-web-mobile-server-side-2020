@@ -20,9 +20,10 @@
                 'events' => $this->filterEvents($term, $location, $price)
             ]);
         }
-        public function detail () {
+
+        public function detail (string $id) {
             echo $this->twig->render('/pages/detailEvent.twig', [
-                'events' => $this->getEvents()
+                'events' => $this->getDetailEvent($id)
             ]);
 
         }
@@ -51,14 +52,15 @@
 
         }
 
-        private function getEvents() {
-            if (isset($_GET['id'])){
-                $id = $_GET['id'];
-            }
-            else{
-                $id = '%';
-            }
-            $getEvents = $this->db->prepare('SELECT * FROM events WHERE event_id like ? ORDER BY begin_time ASC');
+        private function getEvents() : array{
+            $events = $this->db->prepare('SELECT * FROM events ORDER BY begin_time ASC');
+            $events->execute();
+            return $this->convertArrayToEventModels($events->fetchAllAssociative());
+        }
+
+        private function getDetailEvent(string $id) {
+
+            $getEvents = $this->db->prepare('SELECT * FROM events WHERE event_id = ?');
             $getEvents->execute(array($id));
             return $this->convertArrayToEventModels($getEvents->fetchAllAssociative());
         }
