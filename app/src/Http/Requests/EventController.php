@@ -23,7 +23,7 @@
 
         public function detail (string $id) {
             echo $this->twig->render('/pages/detailEvent.twig', [
-                'events' => $this->getDetailEvent($id)
+                'event' => $this->getDetailEvent($id)
             ]);
 
         }
@@ -62,7 +62,7 @@
 
             $getEvents = $this->db->prepare('SELECT * FROM events WHERE event_id = ?');
             $getEvents->execute(array($id));
-            return $this->convertArrayToEventModels($getEvents->fetchAllAssociative());
+            return $this->convertArrayToModel($getEvents->fetchAllAssociative()[0]);
         }
 
         private function composeQuery(string $term, string $location, int $price) : array {
