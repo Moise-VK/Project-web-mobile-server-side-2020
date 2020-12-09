@@ -8,16 +8,10 @@
             <div class="container">
 
                 <div class="d-flex justify-content-between align-items-center">
-                    {% if events|length !=  0 %}
-                    {% for event in events %}
                     <h2>{{ event.getName }}</h2>
                     <ol>
                         <li><a href="home">Home</a></li>
-                                <li>{{ event.getName }}</li>
-                            {% endfor %}
-                        {% else %}
-                            <li>Geen evenement gevonden</li>
-                        {% endif %}
+                        <li>{{ event.getName }}</li>
                     </ol>
                 </div>
 
@@ -25,8 +19,9 @@
         </section><!-- End Breadcrumbs Section -->
         <div class="container">
             <section>
-                {% if events|length !=  0 %}
-                    {% for event in events %}
+                        <div>
+                            <a href="/events" class="btn btn-success mb-3"><- Go Back</a>
+                        </div>
                         <article>
                                 <div class="inline">
                                     <img class="img-detail" src="../assets/img/{{ event.getId() }}.jpg" alt="{{ event.getId() }}" title="{{ event.getId() }}" />
@@ -45,12 +40,6 @@
                             </div>
                             <a class="btn btn-success" href="/tickets?id={{ event.getId() }}">Tickets for this event</a>
                         </article>
-                    {% endfor %}
-                {% else %}
-                    <article class="6u 12u$(xsmall) work-item"  style="height: 25em;">
-                        <p class="noevent">Geen evenementen gevonden</p>
-                    </article>
-                {% endif %}
             </section>
         </div>
     </main><!-- End #main -->
