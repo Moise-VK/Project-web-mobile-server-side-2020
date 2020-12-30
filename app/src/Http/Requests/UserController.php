@@ -3,7 +3,7 @@
     class UserController extends BaseController {
         public function showUserInfoPage () {
             echo $this->twig->render('/pages/users/userdetails.twig', [
-                'user' => $this->getUserDetails($_SESSION['user_id'])
+                'user' => $this->getUserDetails($_SESSION['user'])
             ]);
         }
 
@@ -14,15 +14,15 @@
         }
 
         private function convertArrayToUserObj(array $user) : User {                                        //int $tickets_sold, array $sold_tickets, int $tickets_bought, array $bought_tickets
-            return new User($user['user_id'],
-                $user['firstname'],
-                $user['lastname'],
-                $user['email'],
+            return new User($user['user_data.user_id'],
+                $user['name'] != Null ? $user['name'] : "",
+                $user['last_name'] != Null ? $user['last_name'] : "",
+                $user['email'] != Null ? $user['email'] : "",
                 new Address($user['address'], $user['city'], $user['country']),
-                $user['friends_invited'],
-                $user['tickets_sold'],
+                $user['friends_invited'] != Null ? $user['friends_invited'] : "",
+                $user['tickets_sold'] != Null ? $user['tickets_sold'] : "",
                 $this->getSoldTickets(intval($user['user_id'])),
-                $user['tickets_bought'],
+                $user['tickets_bought'] != Null ? $user['tickets_bought'] : "",
                 $this->getBoughtTickets(intval($user['user_id']))
             );
         }

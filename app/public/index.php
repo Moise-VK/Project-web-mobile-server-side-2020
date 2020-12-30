@@ -62,7 +62,7 @@
         $router->get('', 'UserController@showUserInfoPage');
     });
 
-    $router->set404('IndexController@view');
+    $router->set404( 'UserController@showUserInfoPage');
 
     // Run it!
     $router->run();
