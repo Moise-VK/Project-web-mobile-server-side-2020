@@ -9,7 +9,8 @@
 
         private function getUserDetails(string $userID) : User {
             $stmt = $this->db->prepare('SELECT * FROM users LEFT JOIN user_data ON users.user_id = user_data.user_id WHERE users.user_id = ?');
-            $stmt->execute([intval($userID)]);
+            //$stmt->execute([intval($userID)]);
+            $stmt->execute([2]);
             return $this->convertArrayToUserObj($stmt->fetchAllAssociative()[0]);
         }
 
@@ -19,10 +20,10 @@
                 $user['last_name'] != Null ? $user['last_name'] : "",
                 $user['email'] != Null ? $user['email'] : "",
                  new Address($user['address'], $user['city'], $user['country']),
-                $user['friends_invited'] != Null ? $user['friends_invited'] : "",
-                $user['tickets_sold'] != Null ? $user['tickets_sold'] : "",
+                $user['friends_invited'] != Null ? $user['friends_invited'] : 0,
+                $user['tickets_sold'] != Null ? $user['tickets_sold'] : 0,
                 $this->getSoldTickets(intval($user['user_id'])),
-                $user['tickets_bought'] != Null ? $user['tickets_bought'] : "",
+                $user['tickets_bought'] != Null ? $user['tickets_bought'] : 0,
                 $this->getBoughtTickets(intval($user['user_id']))
             );
         }
