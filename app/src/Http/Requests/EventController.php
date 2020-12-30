@@ -6,7 +6,8 @@
                 'events' => $this->getEvents(),
                 'locations' => $this->getAllLocations(),
                 'minPrice' => $this->getMinPrice(),
-                'maxPrice' => $this->getMaxPrice()
+                'maxPrice' => $this->getMaxPrice(),
+                'firstname' => $_SESSION['firstName']
             ]);
 
         }

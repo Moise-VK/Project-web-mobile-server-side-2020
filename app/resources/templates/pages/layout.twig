@@ -54,10 +54,24 @@
             <ul>
                 <li class="active"><a href="/home">Home</a></li>
                 <li><a href="/events">Evenementen</a></li>
-                <li><a href="tobecreated.php">Ticket omruilen</a></li>
-                <li><a href="tobecreated.php">F.A.Q</a></li>
+                <li><a href="/tickets">Ticket omruilen</a></li>
+                <li><a href="/home#faq">F.A.Q</a></li>
                 <li><a href="/contact">Contact Us</a></li>
-                <li class="get-started"><a href="/login">Login/Register</a></li>
+                {% if firstname != '' %}
+
+                    <li>
+                        <div class="dropdown show">
+                            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Welkom {{ firstname }}</a>
+
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <li><a class="dropdown-item" href="/user">Details profiel</a></li>
+                                <li><a class="dropdown-item" href="/logout">Uitloggen</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                {% else %}
+                    <li class="get-started"><a href="/login">Login/Register</a></li>
+                {% endif %}
             </ul>
         </nav><!-- .nav-menu -->
 
@@ -94,7 +108,7 @@
 <!-- Template Main JS File -->
 <script src="/assets/js/main.js"></script>
 <script src="/assets/js/functional.js"></script>
-
+<script src="/assets/js/dropdown.js"></script>
 </body>
 
 </html>

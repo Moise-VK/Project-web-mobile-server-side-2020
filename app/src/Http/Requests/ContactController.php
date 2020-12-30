@@ -8,7 +8,8 @@
                 'subject' => $this->getSubject(),
                 'message' => $this->getMessage(),
                 'errors' => $this->errors,
-                'filled' => $this->checkFilled()
+                'filled' => $this->checkFilled(),
+                'firstname' => $_SESSION['firstName']
             ]);
 
         }

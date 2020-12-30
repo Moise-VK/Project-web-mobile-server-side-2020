@@ -3,14 +3,15 @@
     class UserController extends BaseController {
         public function showUserInfoPage () {
             echo $this->twig->render('/pages/users/userdetails.twig', [
-                'user' => $this->getUserDetails($_SESSION['user_id'])
+                'user' => $this->getUserDetails(intval($_SESSION['user_id'])),
+                'firstname' => $_SESSION['firstName']
             ]);
         }
 
-        private function getUserDetails(string $userID) : User {
+        private function getUserDetails(int $userID) : User {
             $stmt = $this->db->prepare('SELECT * FROM users LEFT JOIN user_data ON users.user_id = user_data.user_id WHERE users.user_id = ?');
-            //$stmt->execute([intval($userID)]);
-            $stmt->execute([2]);
+            //$stmt->execute([2]);
+            $stmt->execute([$userID]);
             return $this->convertArrayToUserObj($stmt->fetchAllAssociative()[0]);
         }
 
