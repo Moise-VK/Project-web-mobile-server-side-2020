@@ -1302,5 +1302,8 @@ section {
     line-height: 1.7rem;
 }
 
+.hidden {
+    display: none; !important;
+}
 
 

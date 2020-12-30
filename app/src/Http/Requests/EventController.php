@@ -58,7 +58,6 @@
         }
 
         private function getDetailEvent(string $id) {
-
             $getEvents = $this->db->prepare('SELECT * FROM events WHERE event_id = ?');
             $getEvents->execute(array($id));
             return $this->convertArrayToModel($getEvents->fetchAllAssociative()[0]);

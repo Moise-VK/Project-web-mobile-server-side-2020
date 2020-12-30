@@ -1,13 +1,9 @@
 <?php
 
     class EventDataController extends BaseController {
-        public function addEvent () {
+        public function showAddScreen () {
+            echo $this->twig->render('pages/createEventTicket.twig', [
 
+            ]);
         }
-
-        public function updateEventData () {
-
-        }
-
-        
     }

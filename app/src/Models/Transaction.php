@@ -50,6 +50,8 @@
             return $this->buyer_id;
         }
 
-
+        public function __toString()  : string {
+            return $this->transaction_id . ' ' . $this->date . ' ' . $this->ticket_id . ' ' . $this->seller_id . ' ' . $this->buyer_id;
+        }
 
     }

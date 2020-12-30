@@ -32,14 +32,18 @@
     });
 
     $router->mount('/event', function () use ($router){
-        $router->get('/(\w+)', 'EventController@detail');
+        $router->get('(\w+)', 'EventController@detail');
     });
 
-    /*
-    $router->mount('/event', function () use ($router){
-        $router->get('/(\w+)', 'EventController@detail');
-    });*/
-    //$router->get('events', 'EventController@view');
+    $router->mount('/create', function () use ($router) {
+       $router->get('event', 'EventDataController@showAddScreen');
+
+       $router->post('event', 'EventDataController@addNewEventAndTicket');
+
+
+    });
+
+
 
     //Login routes
     $router->get('login', 'AuthController@showLoginRegister');
