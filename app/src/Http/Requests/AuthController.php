@@ -34,7 +34,7 @@
 
                 if(count($userData) > 0 && password_verify($password, $userData[0]['password']) == true){
                     $_SESSION['user'] = $email;
-
+                    $_SESSION['user_id'] = $userData[0]['user_id'];
                     if (isset($_POST['remember'])) {
                         setcookie('email', $email, time() + 60 * 60 * 24 * 30);
                     }
