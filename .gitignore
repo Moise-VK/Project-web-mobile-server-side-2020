@@ -2,5 +2,3 @@
 .idea
 /app/vendor
 /app/saves
-/mysql-data
-mysql-data/
