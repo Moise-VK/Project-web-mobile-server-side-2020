@@ -1,7 +1,7 @@
 ;(function() {
     'use strict';
     window.addEventListener('load', function() {
-
+        document.getElementById('existing').click();
         document.getElementById('new').addEventListener('click', newEvent);
         document.getElementById('existing').addEventListener('click', showExisting);
     })
