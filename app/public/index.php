@@ -49,8 +49,9 @@
     $router->post('register', 'AuthController@register');
     //Logout routes
     $router->get('logout', 'AuthController@logout');
-    /* Voorbeeld om routes te beveiligen
-    $router->mount('/dashboard', function () use ($router){
+
+
+    $router->mount('/user', function () use ($router){
         $router->before('GET|POST', '/.*', function () {
             if(!isset($_SESSION['user'])){
                 header('Location: /login');
@@ -58,7 +59,8 @@
             }
         });
         //ALL ROUTES FOR USERACTIONS/ TRANSACTIONS/ ...
-    }); */
+        $router->get('', 'UserController@showUserInfoPage');
+    });
 
     $router->set404('IndexController@view');
 

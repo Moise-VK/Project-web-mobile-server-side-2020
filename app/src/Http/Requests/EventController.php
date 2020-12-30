@@ -28,7 +28,6 @@
 
         }
 
-
         private function getMinPrice() : int {
             $getEvents = $this->db->prepare('SELECT * FROM events ORDER BY ticketprice_standard ASC LIMIT 1');
             $getEvents->execute();
