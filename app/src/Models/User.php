@@ -94,4 +94,8 @@
         public function getBoughtTickets (): array {
             return $this->bought_tickets;
         }
+
+        public function __toString() : string {
+            return $this->userID . ' ' . $this->firstname . ' ' . $this->lastname . ' ' . $this->email . ' ' . $this->address . ' ' . $this->friends_invited . ' ' . $this->tickets_sold . ' ' . $this->tickets_bought . ' ' . $this->bought_tickets;
+        }
     }

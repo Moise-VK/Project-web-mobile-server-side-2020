@@ -78,6 +78,9 @@
             return $this->sellerID;
         }
 
+        public function __toString() : string {
+            return $this->id . ' ' . $this->name . ' ' . $this->price . ' ' . $this->amount . ' ' . $this->reason . ' ' . $this->eventID . ' ' . $this->sellerID;
+        }
 
 
     }

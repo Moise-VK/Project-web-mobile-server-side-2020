@@ -6,20 +6,40 @@
         <div class="container">
 
             <div class="d-flex justify-content-between align-items-center">
-                <h2>Events</h2>
+                <h2>Ticket aanmaken</h2>
                 <ol>
                     <li><a href="home">Home</a></li>
-                    <li>Events</li>
-                    <li>Create ticket</li>
+                    <li>Evenementen</li>
+                    <li>Ticket aanmaken</li>
                 </ol>
             </div>
         </div>
     </section>
     <section>
         <div class="container">
-            <p>Dit is een test</p>
+            <!-- CENTER THIS RADIOBUTTON THING -->
+            <div class="d-flex">
+                <div>
+                    <input type="radio" id="existing" name="existing" value="existing">
+                    <label for="existing"> Bestaand evenement</label>
+                </div>
+
+                <div class="ml-5">
+                    <input type="radio" id="new" name="new" value="new">
+                    <label for="new"> Nieuw evenement</label>
+                </div>
+            </div>
+
+            <div id="existingEvent" class="">
+                <p>Existing Event</p>
+            </div>
+
+            <div id="newEvent" class="hidden">
+                <p>New Event</p>
+            </div>
+
         </div>
     </section>
 </main>
-
+    <script src="/assets/js/newTicket.js"></script>
 {% endblock %}

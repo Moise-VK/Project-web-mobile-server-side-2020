@@ -2,6 +2,8 @@
 
     class EventDataController extends BaseController {
         public function showAddScreen () {
-            var_dump('Show Add Event screen');
+            echo $this->twig->render('pages/createEventTicket.twig', [
+
+            ]);
         }
     }
