@@ -70,6 +70,7 @@
                     $stmt = $this->db->prepare('INSERT INTO users(email, password) VALUES(?,?)');
                     $stmt->execute($data);
 
+
                     //autoLogin after register
                     $_SESSION['user'] = $email;
                     $this->returnToOverview('home');
@@ -82,7 +83,16 @@
         }
 
         public function logout(){
-            session_destroy();
-            $this->returnToOverview('home');
+            if (isset($_SESSION['user'])) {
+                session_start();
+                $_SESSION = [];
+                session_destroy();
+                header('Location: /home');
+                exit();
+            }
+            else{
+                header('Location: /login');
+                exit();
+            }
         }
     }
