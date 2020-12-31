@@ -16,7 +16,7 @@
         public function sendMail(){
             $this->view();
             if ($this->checkFilled() == 4){
-                $this->sendMessage($this->getName(), $this->getEmail(), $this->getSubject(), $this->getMessage());
+                $this->mailer->sendMail([$this->getEmail()], $this->composeMailText($this->getName(), $this->getEmail(), $this->getSubject(), $this->getMessage()), '');
             }
         }
         private function composeMailText(string $name, string $email, string $subject, string $ogMessage) : string{
@@ -27,17 +27,6 @@
             $message .= "Message: " . $ogMessage . PHP_EOL . PHP_EOL;
             return $message;
         }
-
-        private function sendMessage(string $name, string $email, string $subject, string $message) : bool{
-            if($name && $email && $subject && $message){
-                mail("jonathan@jon-it.be", 'contact-form' , $this->composeMailText($name, $email, $subject, $message));
-                mail($email, 'contact-form details' , $this->composeMailText($name, $email, $subject, $message));
-                return true;
-            } else {
-                return false;
-            }
-        }
-
         /*If no name is filled in $name stays empty and an error wil be added to errors[]
         if a name is filled in $name will be set $name will be set and errors['name'] will be empties
         before the page gets posted $name is empty and errors[] is empty*/

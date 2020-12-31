@@ -3,3 +3,4 @@
 /app/vendor
 /app/saves
 mysql-data/ticketswap
+/app/config/mail.php

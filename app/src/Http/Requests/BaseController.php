@@ -29,6 +29,8 @@ class BaseController
         $loader = new \Twig\Loader\FilesystemLoader($this->basePath . '/../../resources/templates');
         $this->twig = new \Twig\Environment($loader);
 
+        $this->mailer = new MailService(MAIL_SMTP, MAIL_PORT, MAIL_ENCRYPTION, MAIL_USERNAME, MAIL_PASSWORD);
+
     }
 
     protected function returnToOverview(string $overview){

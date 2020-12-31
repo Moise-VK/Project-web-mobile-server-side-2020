@@ -22,7 +22,7 @@
         <div class="container contact">
             <div class="section-title">
                 <h2>Contact</h2>
-                <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+                <p>Heeft u een vraag of opmerking over ons platform? Via onderstaand contactformulier kan u ons altijd bereiken. Wij doen er alles aan om uw vraag/ opmerking zo spoedig mogelijk te beantwoorden.</p>
             </div>
 
             <div class="row">
@@ -31,23 +31,23 @@
                     <div class="row">
                         <div class="col-lg-6 info" data-aos="fade-up">
                             <i class="bx bx-map"></i>
-                            <h4>Address</h4>
-                            <p>A108 Adam Street,<br>New York, NY 535022</p>
+                            <h4>Adres</h4>
+                            <p>Gebr. Desmetstraat 1<br>9000, Gent</p>
                         </div>
                         <div class="col-lg-6 info" data-aos="fade-up" data-aos-delay="100">
                             <i class="bx bx-phone"></i>
-                            <h4>Call Us</h4>
-                            <p>+1 5589 55488 55<br>+1 5589 22548 64</p>
+                            <h4>Bel ons</h4>
+                            <p>+32 5589 55488 55<br>+32 5589 22548 64</p>
                         </div>
                         <div class="col-lg-6 info" data-aos="fade-up" data-aos-delay="200">
                             <i class="bx bx-envelope"></i>
-                            <h4>Email Us</h4>
-                            <p>contact@example.com<br>info@example.com</p>
+                            <h4>Email Ons</h4>
+                            <p>moise@ticketswap.be<br>jonathan@ticketswap.be</p>
                         </div>
                         <div class="col-lg-6 info" data-aos="fade-up" data-aos-delay="300">
                             <i class="bx bx-time-five"></i>
-                            <h4>Working Hours</h4>
-                            <p>Mon - Fri: 9AM to 5PM<br>Sunday: 9AM to 1PM</p>
+                            <h4>Klantendienst</h4>
+                            <p>Ma tot Vrij: 9:00 - 17:00<br>Za, Zon/feestdagen: Gesloten</p>
                         </div>
                     </div>
                 </div>
@@ -55,22 +55,22 @@
                 <div class="col-lg-6">
                     <form action="contact" method="POST" novalidate="" role="form" class="php-email-form" data-aos="fade-up">
                         <div class="form-group">
-                            <input placeholder="Your Name" type="text" name="name" class="form-control" id="name" value="{{name}}"/>
+                            <input placeholder="Uw naam" type="text" name="name" class="form-control" id="name" value="{{name}}"/>
                             {% if errors['name'] is not empty  %}<div style="font-size: 0.75rem; color: red" class="errorMsg">{{ errors['name'] }}</div>{% endif %}
                         </div>
                         <div class="form-group">
-                            <input placeholder="Your Email" type="email" class="form-control" name="email" id="email" value="{{email}}"/>
+                            <input placeholder="Uw emailadres" type="email" class="form-control" name="email" id="email" value="{{email}}"/>
                             {% if errors['email'] is not empty  %}<div style="font-size: 0.75rem; color: red" class="errorMsg">{{ errors['email'] }}</div>{% endif %}
                         </div>
                         <div class="form-group">
-                            <input placeholder="Subject" type="text" class="form-control" name="subject" id="subject" value="{{subject}}"/>
+                            <input placeholder="Onderwerp" type="text" class="form-control" name="subject" id="subject" value="{{subject}}"/>
                             {% if errors['subject'] is not empty  %}<div style="font-size: 0.75rem; color: red" class="errorMsg">{{ errors['subject'] }}</div>{% endif %}
                         </div>
                         <div class="form-group">
-                            <textarea placeholder="Message" class="form-control" name="message" rows="5">{{message}}</textarea>
+                            <textarea placeholder="Bericht" class="form-control" name="message" rows="5">{{message}}</textarea>
                             {% if errors['message'] is not empty  %}<div style="font-size: 0.75rem; color: red" class="errorMsg">{{ errors['message'] }}</div>{% endif %}
                         </div>
-                        <div class="text-center"><button value="submit" name="submit" type="submit">Send Message</button></div>
+                        <div class="text-center"><button value="submit" name="submit" type="submit">Verzend bericht</button></div>
                         <div>
                             {% if filled > 0 and filled < 4%}<div style="font-size: 0.75rem; color: red">Not everything has been filled in</div>{% endif %}
                             {% if filled == 4 %}<div style="color: green">Your message has been sent. Thank you!</div>{% endif %}

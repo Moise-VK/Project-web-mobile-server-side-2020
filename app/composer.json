@@ -7,6 +7,6 @@
   },
   "autoload": {
     "classmap": ["src/"],
-    "files": ["config/database.php"]
+    "files": ["config/database.php", "config/mail.php"]
   }
 }
