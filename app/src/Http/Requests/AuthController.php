@@ -72,9 +72,11 @@
                     $stmt = $this->db->prepare('INSERT INTO users(email, password) VALUES(?,?)');
                     $stmt->execute($data);
 
-
                     //autoLogin after register
                     $_SESSION['user'] = $email;
+                    $_SESSION['user_id'] = $this->db->lastInsertId();
+                    $this->createUserDataRecord(intval($_SESSION['user_id']));
+
                     $this->returnToOverview('home');
                 } else {
                     $this->returnToOverview('register?error=true&email=' . $email);
@@ -82,6 +84,12 @@
             } else {
                 $this->returnToOverview('register?error=true&email=' . $email);
             }
+        }
+
+        private function createUserDataRecord(int $userID) {
+            $stmt = $this->db->prepare('INSERT INTO user_data(user_id) VALUES (?)');
+            $stmt->execute([$userID]);
+            $_SESSION['firstName'] = 'naamloos';
         }
 
         public function logout(){

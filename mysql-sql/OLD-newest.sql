@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysqldb
--- Gegenereerd op: 02 jan 2021 om 20:30
+-- Gegenereerd op: 02 jan 2021 om 17:33
 -- Serverversie: 5.7.31
 -- PHP-versie: 7.4.9
 
@@ -133,7 +133,8 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`user_id`, `email`, `password`) VALUES
 (1, 'jonathan@jon-it.be', '$2y$10$UkdaZpTirdlhj615SOw8f.3cxriaXGWDMtWY0iLRCwmAtFGTVNON2'),
 (2, 'pat1@pat.com', '$2y$10$EFUCfhgNzRKoeZmNTrEi4.RnsG6tQFXoixWZ4qRox27JUl6LVtmsy'),
-(13, 'a@a.a', '$2y$10$L2dAhvI3z44wTRcg2q2cGOc5Il39d/YZjJzDkonjXlNwCgvg/hLse');
+(3, 'laurens.decock@odisee.be', '$2y$10$DBTN8XzQVNM1yiAHLmbBDODglsRN5QXQ7hSgqA/h3p7Y8PWPaM/gS'),
+(4, 'pat1@gmail.com', '$2y$10$R4RGuHLe.74bRgHEC7H2t.m1ZXe2ucOD3p4fZLKGlnTq2VGiXmfq6');
 
 -- --------------------------------------------------------
 
@@ -144,14 +145,14 @@ INSERT INTO `users` (`user_id`, `email`, `password`) VALUES
 DROP TABLE IF EXISTS `user_data`;
 CREATE TABLE `user_data` (
   `user_id` int(11) NOT NULL,
-  `name` varchar(45) NOT NULL DEFAULT 'Naamloos',
-  `last_name` varchar(45) DEFAULT 'Doe',
+  `name` varchar(45) NOT NULL,
+  `last_name` varchar(45) NOT NULL,
   `friends_invited` int(11) DEFAULT NULL,
   `tickets_sold` int(11) DEFAULT NULL,
   `tickets_bought` varchar(45) DEFAULT NULL,
-  `address` varchar(45) DEFAULT NULL,
-  `city` varchar(45) DEFAULT NULL,
-  `country` varchar(45) DEFAULT NULL,
+  `address` varchar(45) NOT NULL,
+  `city` varchar(45) NOT NULL,
+  `country` varchar(45) NOT NULL,
   `data_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -161,8 +162,7 @@ CREATE TABLE `user_data` (
 
 INSERT INTO `user_data` (`user_id`, `name`, `last_name`, `friends_invited`, `tickets_sold`, `tickets_bought`, `address`, `city`, `country`, `data_id`) VALUES
 (1, 'Jonathan', 'De Mangelaere', 2, 5, '2', 'Rue du Commerce 32', 'Mamer', 'Luxembourg', 1),
-(2, '', '', NULL, NULL, NULL, '', '', '', 3),
-(13, 'Naamloos', 'Doe', NULL, NULL, NULL, NULL, NULL, NULL, 6);
+(2, '', '', NULL, NULL, NULL, '', '', '', 3);
 
 --
 -- Indexen voor geëxporteerde tabellen
@@ -249,13 +249,13 @@ ALTER TABLE `transactions`
 -- AUTO_INCREMENT voor een tabel `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT voor een tabel `user_data`
 --
 ALTER TABLE `user_data`
-  MODIFY `data_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `data_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Beperkingen voor geëxporteerde tabellen
