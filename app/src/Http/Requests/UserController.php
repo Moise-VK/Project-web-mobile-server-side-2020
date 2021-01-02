@@ -13,7 +13,7 @@
             //$stmt->execute([2]);
             $stmt->execute([$userID]);
             $userData = $stmt->fetchAllAssociative();
-            return $this->convertArrayToUserObj($userData);
+            return $this->convertArrayToUserObj($userData[0]);
         }
 
         private function convertArrayToUserObj(array $user) : User {
