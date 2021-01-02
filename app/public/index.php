@@ -36,6 +36,14 @@
     });
 
     $router->mount('/create', function () use ($router) {
+        $router->before('GET|POST', '/.*', function () {
+            if(!isset($_SESSION['user'])){
+                header('Location: /login');
+                exit();
+            }
+        });
+
+
        $router->get('event', 'EventDataController@showAddScreen');
 
        $router->post('event', 'EventDataController@addNewEventAndTicket');
