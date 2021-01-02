@@ -15,7 +15,7 @@
             return $this->convertArrayToUserObj($stmt->fetchAllAssociative()[0]);
         }
 
-        private function convertArrayToUserObj(array $user) : User {                                        //int $tickets_sold, array $sold_tickets, int $tickets_bought, array $bought_tickets
+        private function convertArrayToUserObj(array $user) : User {
             return new User($user['user_id'],
                 $user['name'] != Null ? $user['name'] : "",
                 $user['last_name'] != Null ? $user['last_name'] : "",
