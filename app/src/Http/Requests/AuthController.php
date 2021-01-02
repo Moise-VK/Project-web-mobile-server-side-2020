@@ -30,12 +30,12 @@
 
                 $stmt = $this->db->prepare('SELECT * FROM users INNER JOIN user_data ON users.user_id = user_data.user_id WHERE email = ?');
                 $stmt->execute([$email]);
-                $userData = $stmt->fetchAllAssociative();
+                $userData = $stmt->fetchAssociative();
 
-                if(count($userData) > 0 && password_verify($password, $userData[0]['password']) == true){
+                if(count($userData) > 0 && password_verify($password, $userData['password']) == true){
                     $_SESSION['user'] = $email;
-                    $_SESSION['user_id'] = $userData[0]['user_id'];
-                    $_SESSION['firstName'] = $userData[0]['name'];
+                    $_SESSION['user_id'] = $userData['user_id'];
+                    $_SESSION['firstName'] = $userData['name'];
 
                     if (isset($_POST['remember'])) {
                         setcookie('email', $email, time() + 60 * 60 * 24 * 30);

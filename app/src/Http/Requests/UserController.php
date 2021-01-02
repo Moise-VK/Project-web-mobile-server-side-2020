@@ -9,10 +9,11 @@
         }
 
         private function getUserDetails(int $userID) : User {
-            $stmt = $this->db->prepare('SELECT * FROM users LEFT JOIN user_data ON users.user_id = user_data.user_id WHERE users.user_id = ?');
+            $stmt = $this->db->prepare('SELECT * FROM users left JOIN user_data ON users.user_id = user_data.user_id WHERE users.user_id = ?');
             //$stmt->execute([2]);
             $stmt->execute([$userID]);
-            return $this->convertArrayToUserObj($stmt->fetchAllAssociative()[0]);
+            $userData = $stmt->fetchAllAssociative();
+            return $this->convertArrayToUserObj($userData);
         }
 
         private function convertArrayToUserObj(array $user) : User {                                        //int $tickets_sold, array $sold_tickets, int $tickets_bought, array $bought_tickets
