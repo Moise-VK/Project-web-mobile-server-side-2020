@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysqldb
--- Gegenereerd op: 02 jan 2021 om 17:33
+-- Gegenereerd op: 07 dec 2020 om 21:21
 -- Serverversie: 5.7.31
 -- PHP-versie: 7.4.9
 
@@ -20,6 +20,7 @@ SET time_zone = "+00:00";
 --
 -- Database: `ticketswap`
 --
+DROP DATABASE IF EXISTS `ticketswap`;
 CREATE DATABASE IF NOT EXISTS `ticketswap` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `ticketswap`;
 
@@ -94,8 +95,7 @@ CREATE TABLE `tickets` (
   `amount` int(11) NOT NULL,
   `sale_reason` varchar(45) NOT NULL,
   `event_id` int(11) NOT NULL,
-  `transaction_id` int(11) DEFAULT NULL,
-  `seller_id` int(11) NOT NULL
+  `transaction_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -109,8 +109,7 @@ CREATE TABLE `transactions` (
   `transaction_id` int(11) NOT NULL,
   `date_transaction` datetime NOT NULL,
   `seller_id` int(11) NOT NULL,
-  `buyer_id` int(11) DEFAULT NULL,
-  `ticket_id` int(11) DEFAULT NULL
+  `buyer_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -152,17 +151,8 @@ CREATE TABLE `user_data` (
   `tickets_bought` varchar(45) DEFAULT NULL,
   `address` varchar(45) NOT NULL,
   `city` varchar(45) NOT NULL,
-  `country` varchar(45) NOT NULL,
-  `data_id` int(11) NOT NULL
+  `country` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Gegevens worden geëxporteerd voor tabel `user_data`
---
-
-INSERT INTO `user_data` (`user_id`, `name`, `last_name`, `friends_invited`, `tickets_sold`, `tickets_bought`, `address`, `city`, `country`, `data_id`) VALUES
-(1, 'Jonathan', 'De Mangelaere', 2, 5, '2', 'Rue du Commerce 32', 'Mamer', 'Luxembourg', 1),
-(2, '', '', NULL, NULL, NULL, '', '', '', 3);
 
 --
 -- Indexen voor geëxporteerde tabellen
@@ -214,7 +204,7 @@ ALTER TABLE `users`
 -- Indexen voor tabel `user_data`
 --
 ALTER TABLE `user_data`
-  ADD PRIMARY KEY (`data_id`),
+  ADD PRIMARY KEY (`user_id`),
   ADD KEY `fk_user_data_users1_idx` (`user_id`);
 
 --
@@ -250,12 +240,6 @@ ALTER TABLE `transactions`
 --
 ALTER TABLE `users`
   MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT voor een tabel `user_data`
---
-ALTER TABLE `user_data`
-  MODIFY `data_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Beperkingen voor geëxporteerde tabellen

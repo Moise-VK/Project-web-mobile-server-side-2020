@@ -11,7 +11,9 @@
             <h1>App page template</h1>
             <h2>Verkoop veilig en snel uw tickets voor evenementen.</h2>
             <a href="/events" class="download-btn"><i class="bx bx-calendar-event"></i> Evenementen</a>
-            <a href="/create/event" class="download-btn"><i class="bx bx-news"></i> Ticket Verkopen</a>
+              {% if firstname != '' %}
+                    <a href="/create/event" class="download-btn"><i class="bx bx-news"></i> Ticket Verkopen</a>
+              {% endif %}
           </div>
         </div>
         <div class="col-lg-6 d-lg-flex flex-lg-column align-items-stretch order-1 order-lg-2 hero-img" data-aos="fade-up">
