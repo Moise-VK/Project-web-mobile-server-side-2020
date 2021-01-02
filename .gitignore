@@ -2,5 +2,5 @@
 .idea
 /app/vendor
 /app/saves
-mysql-data/ticketswap
+/mysql-data
 /app/config/mail.php
