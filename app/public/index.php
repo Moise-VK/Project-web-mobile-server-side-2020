@@ -55,7 +55,7 @@
         });
         $router->get('/detail', 'UserController@showUserInfoPage');
     });
-    
+
     //Login routes
     $router->get('login', 'AuthController@showLoginRegister');
     $router->post('login', 'AuthController@login');
