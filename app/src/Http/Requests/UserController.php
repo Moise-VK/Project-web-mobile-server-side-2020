@@ -13,8 +13,7 @@
             //$stmt->execute([2]);
             $stmt->execute([$userID]);
             $userData = $stmt->fetchAllAssociative();
-            var_dump($userID); die();
-            return $this->convertArrayToUserObj($userData);
+            return $this->convertArrayToUserObj($userData[0]);
         }
 
         private function convertArrayToUserObj(array $user) : User {
@@ -22,7 +21,9 @@
                 $user['name'] != Null ? $user['name'] : "",
                 $user['last_name'] != Null ? $user['last_name'] : "",
                 $user['email'] != Null ? $user['email'] : "",
-                 new Address($user['address'], $user['city'], $user['country']),
+                 new Address($user['address'] != Null ? $user['email'] : "",
+                                $user['city'] != Null ? $user['email'] : "",
+                             $user['country'] != Null ? $user['email'] : ""),
                 $user['friends_invited'] != Null ? $user['friends_invited'] : 0,
                 $user['tickets_sold'] != Null ? $user['tickets_sold'] : 0,
                 $this->getSoldTickets(intval($user['user_id'])),
