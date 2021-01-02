@@ -21,9 +21,11 @@
                 $user['name'] != Null ? $user['name'] : "",
                 $user['last_name'] != Null ? $user['last_name'] : "",
                 $user['email'] != Null ? $user['email'] : "",
-                 new Address($user['address'] != Null ? $user['email'] : "",
-                                $user['city'] != Null ? $user['email'] : "",
-                             $user['country'] != Null ? $user['email'] : ""),
+
+                 new Address($user['address'] != Null ? $user['address'] : "",
+                                $user['city'] != Null ? $user['city'] : "",
+                             $user['country'] != Null ? $user['country'] : ""),
+
                 $user['friends_invited'] != Null ? $user['friends_invited'] : 0,
                 $user['tickets_sold'] != Null ? $user['tickets_sold'] : 0,
                 $this->getSoldTickets(intval($user['user_id'])),
