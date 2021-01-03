@@ -19,7 +19,7 @@
         public function sendMail(){
             $this->view();
             if ($this->checkFilled() == 4){
-                $this->mailer->sendMail([$this->getEmail()], $this->composeMailText($this->getName(), $this->getEmail(), $this->getSubject(), $this->getMessage()), '');
+                $this->mailer->sendMail([$this->getEmail()], $this->composeMailText($this->getName(), $this->getEmail(), $this->getSubject(), $this->getMessage()), '', 'Contactformulier website');
             }
         }
 

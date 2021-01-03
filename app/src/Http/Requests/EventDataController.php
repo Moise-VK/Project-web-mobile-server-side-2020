@@ -22,7 +22,10 @@
                 'ticketName' => isset($_POST['ticketName']) ? $_POST['ticketName'] : '',
                 'ticketPrice' => isset($_POST['ticketPrice']) ? $_POST['ticketPrice'] : '',
                 'ticketAmount' => isset($_POST['ticketAmount']) ? $_POST['ticketAmount'] : '',
-                'ticketReason' => isset($_POST['ticketReason']) ? $_POST['ticketReason'] : ''
+                'ticketReason' => isset($_POST['ticketReason']) ? $_POST['ticketReason'] : '',
+                //EXISTING EVENT SEARCH
+                'events' => isset($_POST['term']) ? $this->filterEvents($_POST['term']) : '',
+                'term' => isset($_POST['term']) ? $_POST['term'] : ''
             ]);
         }
 
@@ -35,7 +38,7 @@
             $ticketPrice = isset($_POST['ticketPrice']) ? $_POST['ticketPrice'] : '';
             $ticketAmount = isset($_POST['ticketAmount']) ? $_POST['ticketAmount'] : '';
             $ticketReason = isset($_POST['ticketReason']) ? $_POST['ticketReason'] : '';
-            $ticketID = isset($_POST['ticketID']) ? $_POST['ticketID'] : '';
+            $exEventId = isset($_POST['exEventId']) ? $_POST['exEventId'] : '';
 
             $eventName = isset($_POST['eventName']) ? $_POST['eventName'] : '';
             $eventLocation = isset($_POST['eventLocation']) ? $_POST['eventLocation'] : '';
@@ -46,10 +49,8 @@
             $eventEndHour = isset($_POST['eventEndHour']) ? $_POST['eventEndHour'] : '';
             $eventEndMinute = isset($_POST['eventEndMinute']) ? $_POST['eventEndMinute'] : '';
             $eventDescription = isset($_POST['eventDescription']) ? $_POST['eventDescription'] : '';
-
             if(isset($_POST['typeEvent']) && $_POST['typeEvent'] == 'existing' && $_POST['moduleAction'] == 'createTicket'){
-                //$this->createNewTicket(3, $ticketName, $ticketAmount, $ticketReason, $ticketPrice);//TO TEST
-                $this->createNewTicket($ticketID, $ticketName, $ticketAmount, $ticketReason, $ticketPrice); // PRODUCTION
+                $this->createNewTicket($exEventId, $ticketName, $ticketAmount, $ticketReason, $ticketPrice); // PRODUCTION
                 $this->returnToOverview('/home');
             } else {
                 $eventID = $this->createNewEvent($eventName, $eventLocation, $eventStartDate, $eventStartHour, $eventStartMinute, $eventEndDate, $eventEndHour, $eventEndMinute, $eventDescription, $ticketPrice);
@@ -104,5 +105,12 @@
         private function createTicketInDB(array $data) {
             $stmt = $this->db->prepare('INSERT INTO tickets(name, ticket_price, amount, sale_reason, event_id, seller_id) VALUES (?,?,?,?,?,?)');
             $stmt->execute($data);
+            $this->returnToOverview('home');
+        }
+
+        private function filterEvents(string $term) : array {
+            $stmt = $this->db->prepare('SELECT * FROM events WHERE name LIKE ?');
+            $stmt->execute(['%' . $term . '%']);
+            return $this->convertArrayToEventModels($stmt->fetchAllAssociative());
         }
     }

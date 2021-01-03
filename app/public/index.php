@@ -46,6 +46,8 @@
        $router->post('event', 'EventDataController@addNewEventAndTicket');
 
        $router->post('ticket', 'EventDataController@createTicket');
+
+       $router->post('event/search', 'EventDataController@showAddScreen');
     });
 
     $router->mount('/user', function () use ($router) {

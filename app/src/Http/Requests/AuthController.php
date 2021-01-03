@@ -76,7 +76,7 @@
                     $_SESSION['user'] = $email;
                     $_SESSION['user_id'] = $this->db->lastInsertId();
                     $this->createUserDataRecord(intval($_SESSION['user_id']));
-
+                    $this->mailer->sendMail([$email], $this->composeWelcomeMail(), '', 'Welkom gebruiker');
                     $this->returnToOverview('home');
                 } else {
                     $this->returnToOverview('register?error=true&email=' . $email);
@@ -104,5 +104,16 @@
                 header('Location: /login');
                 exit();
             }
+        }
+
+        private function composeWelcomeMail() : string {
+            $message = '<main>';
+            $message .= '<p>Beste gebruiker</p>';
+            $message .= '<p>Wij heten u van harte welkom op ons platform.</p>';
+            $message .= '<p>Wij hopen dat u via ons platform uw tickets kan aankopen of verkopen.</p>';
+            $message .= '<p>Met vriendelijke groet</p>';
+            $message .= '<p>TicketSwap</p>';
+
+            return $message;
         }
     }
