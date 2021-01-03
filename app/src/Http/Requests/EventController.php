@@ -18,13 +18,15 @@
             $price = isset($_GET['price']) ? intval($_GET['price']) : '';
 
             echo $this->twig->render('/pages/events.twig', [
-                'events' => $this->filterEvents($term, $location, $price)
+                'events' => $this->filterEvents($term, $location, $price),
+                'firstname' => $_SESSION['firstName']
             ]);
         }
 
         public function detail (string $id) {
             echo $this->twig->render('/pages/detailEvent.twig', [
-                'event' => $this->getDetailEvent($id)
+                'event' => $this->getDetailEvent($id),
+                'firstname' => $_SESSION['firstName']
             ]);
 
         }

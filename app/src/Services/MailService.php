@@ -22,16 +22,11 @@
 
         private function composeMailHeader() : string {
             $html = '<main>';
-            $html .= '<p>Beste</p>';
-            $html .= '<p>Gegevens contactformulier</p>';
-
-
             return $html;
         }
 
         private function composeMailBody() : string {
-            $hmtl = '';
-            $html .= '</main>';
+            $html = '</main>';
             return '';
 
         }
