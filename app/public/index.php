@@ -44,6 +44,8 @@
         });
        $router->get('event', 'EventDataController@showAddScreen');
        $router->post('event', 'EventDataController@addNewEventAndTicket');
+
+       $router->post('ticket', 'EventDataController@createTicket');
     });
 
     $router->mount('/user', function () use ($router) {
