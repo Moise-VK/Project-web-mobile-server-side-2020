@@ -34,7 +34,7 @@
                 <div id="existingEvent"  style="display: block;">
                     {% include 'layout/parts/existingEvent.twig' %}
                 </div>
-            <form action="/create/ticket" method="POST" novalidate>
+            <form action="/create/ticket" method="POST" novalidate enctype="multipart/form-data">
                 <div id="newEvent"  style="display: none;">
                     {% include 'layout/parts/newEvent.twig' %}
                 </div>

@@ -51,11 +51,11 @@
             $eventDescription = isset($_POST['eventDescription']) ? $_POST['eventDescription'] : '';
             if(isset($_POST['typeEvent']) && $_POST['typeEvent'] == 'existing' && $_POST['moduleAction'] == 'createTicket'){
                 $this->createNewTicket($exEventId, $ticketName, $ticketAmount, $ticketReason, $ticketPrice); // PRODUCTION
-                $this->returnToOverview('/home');
+                //$this->returnToOverview('/home');
             } else {
                 $eventID = $this->createNewEvent($eventName, $eventLocation, $eventStartDate, $eventStartHour, $eventStartMinute, $eventEndDate, $eventEndHour, $eventEndMinute, $eventDescription, $ticketPrice);
                 $this->createNewTicket($eventID, $ticketName, $ticketAmount, $ticketReason, $ticketPrice);
-                $this->returnToOverview('/home');
+                //$this->returnToOverview('/home');
             }
         }
 
@@ -91,6 +91,7 @@
                     $_SESSION['user_id']
                 ];
                 $this->createTicketInDB($data);
+                $this->procesTicketUpload($this->db->lastInsertId());
             } else {
                 $this->showAddScreen();
             }
@@ -102,15 +103,19 @@
             return $this->db->lastInsertId();
         }
 
-        private function createTicketInDB(array $data) {
+        private function createTicketInDB(array $data) : int {
             $stmt = $this->db->prepare('INSERT INTO tickets(name, ticket_price, amount, sale_reason, event_id, seller_id) VALUES (?,?,?,?,?,?)');
             $stmt->execute($data);
-            $this->returnToOverview('home');
+            return $this->db->lastInsertId();
         }
 
         private function filterEvents(string $term) : array {
             $stmt = $this->db->prepare('SELECT * FROM events WHERE name LIKE ?');
             $stmt->execute(['%' . $term . '%']);
             return $this->convertArrayToEventModels($stmt->fetchAllAssociative());
+        }
+
+        private function procesTicketUpload(int $ticketId) {
+            move_uploaded_file($_FILES['ticketFile']['tmp_name'], '../storage/tickets/' . $ticketId . '.' . pathinfo($_FILES['ticketFile']['name'], PATHINFO_EXTENSION));
         }
     }
