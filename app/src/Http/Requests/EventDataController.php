@@ -6,6 +6,8 @@
                 'firstname' => $_SESSION['firstName'],
                 //EXISTING EVENT
                 'exEventName' => isset($_POST['exEventName']) ? $_POST['exEventName'] : '',
+                //NEW OR EXISTING
+                'nox' => isset($_POST['typeEvent']) == 'new' ? 'new' : 'existing',
                 //NEW EVENT
                 'eventName' => isset($_POST['eventName']) ? $_POST['eventName'] : '',
                 'eventLocation' => isset($_POST['eventLocation']) ? $_POST['eventLocation'] : '',
@@ -29,7 +31,6 @@
         }
 
         public function createTicket() {
-
             $ticketName = isset($_POST['ticketName']) ? $_POST['ticketName'] : '';
             $ticketPrice = isset($_POST['ticketPrice']) ? $_POST['ticketPrice'] : '';
             $ticketAmount = isset($_POST['ticketAmount']) ? $_POST['ticketAmount'] : '';
@@ -47,11 +48,13 @@
             $eventDescription = isset($_POST['eventDescription']) ? $_POST['eventDescription'] : '';
 
             if(isset($_POST['typeEvent']) && $_POST['typeEvent'] == 'existing' && $_POST['moduleAction'] == 'createTicket'){
-                $this->createNewTicket(3, $ticketName, $ticketAmount, $ticketReason, $ticketPrice);
-                //$this->createNewTicket($ticketID, $ticketName, $ticketAmount, $ticketReason, $ticketPrice);
+                //$this->createNewTicket(3, $ticketName, $ticketAmount, $ticketReason, $ticketPrice);//TO TEST
+                $this->createNewTicket($ticketID, $ticketName, $ticketAmount, $ticketReason, $ticketPrice); // PRODUCTION
+                $this->returnToOverview('/home');
             } else {
                 $eventID = $this->createNewEvent($eventName, $eventLocation, $eventStartDate, $eventStartHour, $eventStartMinute, $eventEndDate, $eventEndHour, $eventEndMinute, $eventDescription, $ticketPrice);
                 $this->createNewTicket($eventID, $ticketName, $ticketAmount, $ticketReason, $ticketPrice);
+                $this->returnToOverview('/home');
             }
         }
 
