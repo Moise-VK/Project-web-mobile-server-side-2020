@@ -66,16 +66,20 @@
                         </div>
                         <div>
                             <input type="text" class="form-control mt-2" placeholder="Address" name="address"
-                                   value="{{ user.getAddress().getCity() }}"/>
+                                   value="{{ user.getAddress().getAddress() }}"/>
                         </div>
                         <div>
-                            <input type="text" class="form-control mt-2" placeholder="City" name="city"/>
+                            <input type="text" class="form-control mt-2" placeholder="City" name="city" value="{{ user.getAddress().getCity() }}"/>
                         </div>
                         <div>
                             <select id="country" name="country" class="form-control mt-2">
                                 <option value="">Select country</option>
                                 {% for country in countries %}
-                                    <option value="{{ country }}">{{ country }}</option>
+                                    {% if country == user.getAddress().getCountry() %}
+                                        <option value="{{ country }}" selected>{{ country }}</option>
+                                    {% else %}
+                                        <option value="{{ country }}">{{ country }}</option>
+                                    {% endif %}
                                 {% endfor %}
                             </select>
                         </div>
