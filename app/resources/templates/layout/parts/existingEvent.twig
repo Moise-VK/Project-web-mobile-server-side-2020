@@ -1,10 +1,50 @@
-
-<div class="form-group">
-    <label for="existingEventAutocomplete">Zoek een bestaand evemenement</label>
-    <input type="text" id="existingEventAutocomplete" name="existingEventAutocomplete" value="{{ eventName }}" placeholder="Zoek evenement">
+<div>
+    <form action="/create/event/search" method="POST" novalidate>
+        <div>
+            <label for="existingEventAutocomplete">Zoek een bestaand evemenement</label>
+            <input type="text" id="term" name="term" value="{{ term }}" placeholder="Zoek evenement">
+        </div>
+        <div>
+            <input type="hidden" name="moduleAction" value="createTicketSearch">
+            <input type="submit" name="search" id="search" value="zoek evenement">
+        </div>
+    </form>
 </div>
 
-<div class="form-group">
+<div id="resultEvents" class="mt-2">
+    <!-- HIER KOMEN ALLE GEVONDEN EVENEMENTEN -->
+    {% if events|length != 0 %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Naam</th>
+                    <th>Locatie</th>
+                    <th>Start</th>
+                    <th>Einde</th>
+                    <th>Acties</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for event in events %}
+                    <tr>
+                        <td>{{ event.getName() }}</td>
+                        <td>{{ event.getLocation() }}</td>
+                        <td>{{ event.getStartDate() }}</td>
+                        <td>{{ event.getEndDate() }}</td>
+                        <td><input type="checkbox" id="{{ event.getId() }}" onchange="changeSelected({{ event.getId() }})"></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+    {% else %}
+        <article>
+            <p>Geen evenementen gevonden</p>
+        </article>
+    {% endif %}
+</div>
+
+<div class="form-group mt-5">
     <a id="ticketDetailsEx" href="#" class="btn btn-success">Volgende <em class="bx bxs-chevron-right"></em></a>
 </div>
 

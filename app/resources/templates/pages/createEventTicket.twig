@@ -18,15 +18,15 @@
     <section>
         <div class="container">
             <!-- CENTER THIS RADIOBUTTON THING -->
-            <form action="/create/ticket" method="POST" novalidate>
+
                 <div class="d-flex" id="eventSelection">
                     <div>
-                        <input type="radio" id="existing" name="typeEvent" value="existing">
+                        <input type="radio" id="existing" name="sortEvent" value="existing">
                         <label for="existing"> Bestaand evenement</label>
                     </div>
 
                     <div class="ml-5">
-                        <input type="radio" id="new" name="typeEvent" value="new">
+                        <input type="radio" id="new" name="sortEvent" value="new">
                         <label for="new"> Nieuw evenement</label>
                     </div>
                 </div>
@@ -34,12 +34,12 @@
                 <div id="existingEvent"  style="display: block;">
                     {% include 'layout/parts/existingEvent.twig' %}
                 </div>
-
+            <form action="/create/ticket" method="POST" novalidate enctype="multipart/form-data">
                 <div id="newEvent"  style="display: none;">
                     {% include 'layout/parts/newEvent.twig' %}
                 </div>
 
-                <div id="ticketDetails" style="display: none;">
+                <div id="ticketDetails" style="display: block;">
                     {% include 'layout/parts/ticketDetails.twig' %}
                 </div>
             </form>

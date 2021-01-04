@@ -13,39 +13,15 @@
             $this->mailer = new Swift_Mailer($transport);
         }
 
-        public function composeMailText() : string {
-            $html = $this->composeMailHeader();
-            $html .= $this->composeMailBody();
 
-            return $html;
-        }
+        public function sendMail($to, $content, $attachments, $mailSubject) {
 
-        private function composeMailHeader() : string {
-            $html = '<main>';
-            $html .= '<p>Beste</p>';
-            $html .= '<p>Gegevens contactformulier</p>';
-
-
-            return $html;
-        }
-
-        private function composeMailBody() : string {
-            $hmtl = '';
-            $html .= '</main>';
-            return '';
-
-        }
-
-
-        public function sendMail($to, $content, $attachments) {
-
-            $message = (new Swift_Message('Contactformulier ticketswap'))
+            $message = (new Swift_Message($mailSubject))
                 ->setFrom(['jonathan@jon-it.be' => 'Ticketswap'])
                 ->setTo($to)
                 ->setBody($content)
                 ->setContentType('text/html');
 
             $result = $this->mailer->send($message);
-            var_dump($result);
         }
     }

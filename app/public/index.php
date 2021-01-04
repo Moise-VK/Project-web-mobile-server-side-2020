@@ -42,16 +42,23 @@
                 exit();
             }
         });
-
-
        $router->get('event', 'EventDataController@showAddScreen');
-
        $router->post('event', 'EventDataController@addNewEventAndTicket');
 
+       $router->post('ticket', 'EventDataController@createTicket');
 
+       $router->post('event/search', 'EventDataController@showAddScreen');
     });
 
-
+    $router->mount('/user', function () use ($router) {
+        $router->before('GET|POST', '/.*', function () {
+            if(!isset($_SESSION['user'])){
+                header('Location: /login');
+                exit();
+            }
+        });
+        $router->get('/detail', 'UserController@showUserInfoPage');
+    });
 
     //Login routes
     $router->get('login', 'AuthController@showLoginRegister');
@@ -63,18 +70,7 @@
     $router->get('logout', 'AuthController@logout');
 
 
-    $router->mount('/user', function () use ($router){
-        $router->before('GET|POST', '/.*', function () {
-            if(!isset($_SESSION['user'])){
-                header('Location: /login');
-                exit();
-            }
-        });
-        //ALL ROUTES FOR USERACTIONS/ TRANSACTIONS/ ...
-        $router->get('', 'UserController@showUserInfoPage');
-    });
-
-    $router->set404( 'UserController@showUserInfoPage');
+    $router->set404( 'IndexController@view');
 
     // Run it!
     $router->run();

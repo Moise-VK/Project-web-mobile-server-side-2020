@@ -1,2 +1,44 @@
-<input type="hidden" name="moduleAction" value="createTicket" />
-<input type="submit" class="btn btn-success submit" value="Zet te koop">
+
+<div>
+    <h3>Details van het ticket</h3>
+</div>
+
+<div>
+    <label for="ticketName">Naam ticket</label>
+    <input type="hidden" id="exEventId" name="exEventId" value="">
+    <input type="hidden" id="typeEvent" name="typeEvent" value="">
+    <input type="text" name="ticketName" id="ticketName" placeholder="Naam" value="{{ ticketName }}">
+</div>
+
+<div>
+    <label for="ticketSort">Soort ticket</label>
+    <select id="ticketSort" name="ticketSort">
+        <option value="standard">Standaard</option>
+        <option value="combi">Combi (meerdaags + camping)</option>
+        <option value="day">Dagticket</option>
+    </select>
+</div>
+
+<div>
+    <label for="ticketPrice">Prijs per ticket</label>
+    <input type="number" min="0" max="10000" step="0.5" id="ticketPrice" name="ticketPrice" value="{{ ticketPrice }}">
+</div>
+
+<div>
+    <label for="ticketAmount">Hoeveel tickets heeft u?</label>
+    <input type="number" min="1" max="10" step="1" id="ticketAmount" name="ticketAmount" value="{{ ticketAmount }}">
+</div>
+
+<div>
+    <label for="ticketReason">Geef een reden op</label>
+    <textarea id="ticketReason" name="ticketReason">{{ ticketReason }}</textarea>
+</div>
+
+<div>
+    <input type="file" name="ticketFile" id="ticketFile" accept="application/pdf">
+</div>
+
+<div>
+    <input type="hidden" name="moduleAction" value="createTicket" />
+    <input type="submit" class="btn btn-success submit" value="Zet te koop">
+</div>

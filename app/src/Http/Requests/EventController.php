@@ -18,7 +18,8 @@
             $price = isset($_GET['price']) ? intval($_GET['price']) : '';
 
             echo $this->twig->render('/pages/events.twig', [
-                'events' => $this->filterEvents($term, $location, $price)
+                'events' => $this->filterEvents($term, $location, $price),
+                'firstname' => $_SESSION['firstName']
             ]);
         }
 
@@ -98,27 +99,6 @@
             $getEvents = $this->db->prepare($composedQuery['query']);
             $getEvents->execute($composedQuery['queryArgs']);
             return $this->convertArrayToEventModels($getEvents->fetchAllAssociative());
-        }
-
-        private function convertArrayToEventModels(array $events) : array {
-            $eventsAsModel= [];
-            foreach ($events as $event) {
-                $eventsAsModel[] = $this->convertArrayToModel($event);
-            }
-            return $eventsAsModel;
-        }
-
-        private function formatTime(string $data) : string {
-            $dateTime = explode(' ', $data);
-            $time = explode(':', $dateTime[1]);
-            $date = join('/', array_reverse(explode('-', $dateTime[0])));
-            $time = $time[0] . ':' . $time[1];
-
-            return $date . ' ' . $time;
-        }
-
-        private function convertArrayToModel(array $event) : Event {
-            return new Event($event['event_id'], $event['name'], $event['ticketprice_standard'], $event['location'], $event['description'], $this->formatTime($event['begin_time']), $this->formatTime($event['end_time']));
         }
 
     }

@@ -4,3 +4,4 @@
 /app/saves
 /mysql-data
 /app/config/mail.php
+/app/storage
