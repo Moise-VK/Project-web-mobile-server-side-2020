@@ -28,8 +28,8 @@
 .image {
     display: inline-block;
     position: relative;
-    height: 250px;
-    width: 350px;
+    height: 11rem;
+    width: 17.5rem; !important;
 }
 
 .hidden {

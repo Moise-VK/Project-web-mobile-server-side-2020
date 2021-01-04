@@ -24,7 +24,8 @@
 
         public function detail (string $id) {
             echo $this->twig->render('/pages/detailEvent.twig', [
-                'event' => $this->getDetailEvent($id)
+                'event' => $this->getDetailEvent($id),
+                'firstname' => $_SESSION['firstName']
             ]);
 
         }

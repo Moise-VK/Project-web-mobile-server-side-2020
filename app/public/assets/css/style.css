@@ -1280,6 +1280,9 @@ section {
     width:35rem; !important;
     vertical-align: initial;
 }
+.recently-bought{
+    display: none; !important;
+}
 .event-info li{
     display: inline-block; !important;
     line-height: 2rem;

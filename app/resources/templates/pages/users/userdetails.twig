@@ -8,7 +8,7 @@
             <div class="container">
 
                 <div class="d-flex justify-content-between align-items-center">
-                    <h2>User details</h2>
+                    <h2>{{ user.getFirstname() }}</h2>
                     <ol>
                         <li><a href="home">User </a></li>
                         <li>Contact</li>
@@ -18,13 +18,37 @@
             </div>
         </section><!-- End Breadcrumbs Section -->
 
-        <section class="inner-page">
-
-            <p>{{ user.getFirstname() }}</p>
-
-            <p>{{ user.getAddress() }}</p>
-
-        </section>
+        <div class="container">
+            <section>
+                <h2>Recent gekochte tickets</h2>
+                <div class="card-deck">
+                    {% if tickets|length !=  0 %}
+                        {% for ticket in tickets %}
+                            <div class="card" style="max-width: 20rem">
+                                <div class="card-body">
+                                    <h4 class="card-title">{{ ticket.getName() }}</h4>
+                                    <div class="card-img-top ">
+                                        <img class="img-thumbnail" src="../assets/img/{{ ticket.getEventID() }}.jpg"
+                                             alt="{{ ticket.getEventID() }}" title="{{ ticket.getEventID() }}"/>
+                                    </div>
+                                    <div class="card-text">
+                                        <p>Start: {{ ticket.getStart() }}</p>
+                                        <p>Locatie: {{ ticket.getLocation() }}</p>
+                                        <p>Verkoper: {{ ticket.getSellerName() }}</p>
+                                        <p>€{{ ticket.getPrice() }}</p>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    {{ ticket.getBuyDate }}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p>U heeft nog geen tickets gekocht</p>
+                    {% endif %}
+                </div>
+            </section>
+        </div>
 
     </main><!-- End #main -->
 
