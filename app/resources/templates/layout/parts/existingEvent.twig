@@ -1,17 +1,17 @@
 <div>
     <form action="/create/event/search" method="POST" novalidate>
-        <div>
+        <div class="form-group d-flex flex-column">
             <label for="existingEventAutocomplete">Zoek een bestaand evemenement</label>
-            <input type="text" id="term" name="term" value="{{ term }}" placeholder="Zoek evenement">
+            <input type="text" id="term" name="term" value="{{ term }}" placeholder="Zoek evenement" class="form-control">
         </div>
-        <div>
+        <div class="form-group d-flex">
             <input type="hidden" name="moduleAction" value="createTicketSearch">
-            <input type="submit" name="search" id="search" value="zoek evenement">
+            <input type="submit" name="search" id="search" class="btn btn-warning" value="zoek evenement">
         </div>
     </form>
 </div>
 
-<div id="resultEvents" class="mt-2">
+<div id="resultEvents" class="">
     <!-- HIER KOMEN ALLE GEVONDEN EVENEMENTEN -->
     {% if events|length != 0 %}
         <table class="table">
@@ -44,7 +44,4 @@
     {% endif %}
 </div>
 
-<div class="form-group mt-5">
-    <a id="ticketDetailsEx" href="#" class="btn btn-success">Volgende <em class="bx bxs-chevron-right"></em></a>
-</div>
 
