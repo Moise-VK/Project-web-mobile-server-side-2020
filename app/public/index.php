@@ -58,6 +58,7 @@
             }
         });
         $router->get('/detail', 'UserController@showUserInfoPage');
+        $router->post('/detail/updateData', 'UserController@updateData');
     });
 
     //Login routes

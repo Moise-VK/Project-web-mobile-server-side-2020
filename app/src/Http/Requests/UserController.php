@@ -8,6 +8,11 @@
                 'firstname' => $_SESSION['firstName']
             ]);
         }
+        public function updateData(){
+            $this->setUserData(intval($_SESSION['user_id']));
+            header('Location: /user/detail');
+            exit();
+        }
 
 
         private function getUserDetails (int $userID): User {
@@ -106,7 +111,8 @@ ORDER BY transactions.date_transaction DESC LIMIT 3';
             WHERE user_id=?';
             $updateUser = $this->db->prepare($updateQuery);
             $updateUser->execute(array($_POST['name'],$_POST['last_name'],$_POST['address'],$_POST['city'],$_POST['country'], $userID));
-            $updateEmail = $this->db->prepare('UPDATE user SET email=? WHERE user_id=?');
-            $updateEmail->execute(array($_POST['email']));
+
+            $updateEmail = $this->db->prepare('UPDATE users SET email=? WHERE user_id=?');
+            $updateEmail->execute(array($_POST['email'], $userID));
         }
     }
