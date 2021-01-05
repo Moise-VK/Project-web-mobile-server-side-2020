@@ -26,6 +26,7 @@
         public function detail (string $id) {
             echo $this->twig->render('/pages/detailEvent.twig', [
                 'event' => $this->getDetailEvent($id),
+                'tickets' => $this->getTickets($id),
                 'firstname' => $_SESSION['firstName']
             ]);
 
@@ -101,4 +102,34 @@
             return $this->convertArrayToEventModels($getEvents->fetchAllAssociative());
         }
 
+        private function getTickets (int $eventID): array{
+            $getTicketQuery= 'SELECT tickets.ticket_id as ticket_id, tickets.name as ticket_name, tickets.ticket_price as ticket_price, tickets.amount as amount, tickets.sale_reason as sale_reason, tickets.event_id as event_id, tickets.seller_id as seller_id, user_data.name as sellerName, user_data.last_name as sellerLastname, tickets.ticket_type as ticket_type FROM tickets 
+            INNER JOIN user_data on tickets.seller_id = user_data.user_id 
+            WHERE event_id = ? AND tickets.transaction_id IS NULL';
+            $getTickets = $this->db->prepare($getTicketQuery);
+            $getTickets->execute(array($eventID));
+            $ticketsArr = $getTickets->fetchAllAssociative();
+
+            return $this->convertArrayToTicket($ticketsArr);
+        }
+
+        private function convertArrayToTicket (array $ticketsArr): array{
+            $tickets = [];
+            foreach ($ticketsArr as $ticket){
+                for ($i=0; $i<$ticket['amount'];$i++){
+                    $tickets[] = new Ticket(
+                        $ticket['ticket_id'],
+                        $ticket['ticket_name'],
+                        $ticket['ticket_price'],
+                        $ticket['amount'],
+                        $ticket['sale_reason'],
+                        $ticket['event_id'],
+                        $ticket['seller_id'],
+                        $ticket['sellerName'].' '.$ticket['sellerLastname'],
+                        $ticket['ticket_type']
+                    );
+                }
+            }
+            return $tickets;
+        }
     }
