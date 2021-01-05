@@ -73,6 +73,7 @@
         });
 
         $router->get('', 'CheckoutController@showCheckout');
+        $router->post('/cart/details', 'CheckoutController@showCart');
 
         $router->post('/personal', 'CheckoutController@processPersonalInformation');
 
