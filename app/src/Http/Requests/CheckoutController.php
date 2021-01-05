@@ -53,10 +53,9 @@
 
             if($this->fName && $this->lastName && $this->email && $this->address && $this->number && $this->city && $this->postal && $this->country){
                 $this->persData = true;
-                $this->mailer->sendMail([$_SESSION['user']],
-                                        $this->mailer->composeSaleMail(),
-                             'Ticket sold',
-                                        $this->docGenerator->generateSaleDocument());
+                //$this->mailer->sendMail([$this->email],
+                //                        '',
+                //             'Ticket sold', '');
             } else {
                 $this->persData = false;
             }
@@ -65,8 +64,35 @@
 
         public function processFinancial () {
             $this->finData = true;
+            //ADD DATA TO WRITE IN DB HERE CONVERT TO TICKET
+            $this->addSaleToDB([]);
             $this->showCheckout();
         }
 
+        private function addMultipleSalesToDB(array $tickets) {
+            foreach($tickets as $ticket){
+                $this->addSaleToDb($ticket);
+            }
+        }
+
+        private function addSaleToDb(Ticket $ticket) {
+            $stmt = $this->db->prepare('INSERT INTO transactions(date_transactions, seller_id, buyer_id, ticket_id) VALUES (?,?,?,?)');
+            $stmt->execute([
+                date('Y-m-d H:i:s'),
+                $ticket->getSellerID(),
+                $_SESSION['user_id'],
+                $ticket->getId()
+            ]);
+
+            $this->updateTicket($this->db->lastInsertId(), $ticket->getId());
+        }
+
+        private function updateTicket(int $transactionID, int $ticketID) {
+            $stmt = $this->db->prepare('UPDATE tickets SET transaction_id = ? WHERE ticket_id = ?');
+            $stmt->execute([
+                $transactionID,
+                $ticketID
+            ]);
+        }
 
     }
