@@ -8,6 +8,8 @@
         private string $reason;
         private int $eventID;
         private int $sellerID;
+        private string $sellerName;
+        private string $ticketType;
 
         /**
          * Ticket constructor.
@@ -18,8 +20,10 @@
          * @param string $reason
          * @param int $eventID
          * @param int $sellerID
+         * @param string $sellerName
+         * @param string $ticketType
          */
-        public function __construct (int $id, string $name, float $price, int $amount, string $reason, int $eventID, int $sellerID) {
+        public function __construct (int $id, string $name, float $price, int $amount, string $reason, int $eventID, int $sellerID, string $sellerName, string $ticketType) {
             $this->id = $id;
             $this->name = $name;
             $this->price = $price;
@@ -27,6 +31,8 @@
             $this->reason = $reason;
             $this->eventID = $eventID;
             $this->sellerID = $sellerID;
+            $this->sellerName = $sellerName;
+            $this->ticketType = $ticketType;
         }
 
         /**
@@ -76,6 +82,20 @@
          */
         public function getSellerID (): int {
             return $this->sellerID;
+        }
+
+        /**
+         * @return string
+         */
+        public function getSellerName (): string {
+            return $this->sellerName;
+        }
+
+        /**
+         * @return string
+         */
+        public function getTicketType (): string {
+            return $this->ticketType;
         }
 
         public function __toString() : string {

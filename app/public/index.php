@@ -50,6 +50,7 @@
        $router->post('event/search', 'EventDataController@showAddScreen');
     });
 
+    //User-detail routes
     $router->mount('/user', function () use ($router) {
         $router->before('GET|POST', '/.*', function () {
             if(!isset($_SESSION['user'])){
