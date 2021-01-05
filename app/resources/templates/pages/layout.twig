@@ -69,7 +69,16 @@
                         </div>
                     </li>
 
-                    <li><a href="/checkout/cart"><i class="bx bx-shopping-bag h4"></i></a></li>
+                    <li>
+                        <form action="/checkout/cart/details" method="POST" novalidate>
+                            <input type="hidden" name="cartTickets" id="cartTickets" value="">
+                            <input type="hidden" name="moduleAction" value="shoppingCart">
+                        <!--<input type="submit" class="bx bx-shopping-bag-h4" value=""><span id="shoppingCartTotal"></span>-->
+                            <button type="submit" class="btn btn-outline-primary ml-2 mt-2">
+                                <i class="bx bx-shopping-bag h4"></i><span id="shoppingCartTotal" class="custom-control-label-sm"></span>
+                            </button>
+                        </form>
+                    </li>
                 {% else %}
                     <li class="get-started"><a href="/login">Login/Register</a></li>
                 {% endif %}
@@ -108,9 +117,8 @@
 
 <!-- Template Main JS File -->
 <script src="/assets/js/main.js"></script>
-<script src="/assets/js/functional.js"></script>
 <script src="/assets/js/dropdown.js"></script>
-<script src="/assets/js/newTicket.js"></script>
+<script src="/assets/js/shoppingCart.js"></script>
 </body>
 
 </html>

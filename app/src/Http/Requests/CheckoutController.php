@@ -65,26 +65,26 @@
         public function processFinancial () {
             $this->finData = true;
             //ADD DATA TO WRITE IN DB HERE CONVERT TO TICKET
-            $this->addSaleToDB([]);
+            $this->addMultipleSalesToDB([]);
             $this->showCheckout();
         }
 
         private function addMultipleSalesToDB(array $tickets) {
             foreach($tickets as $ticket){
-                $this->addSaleToDb($ticket);
+                $this->addSaleToDb($ticket['seller_id'], $ticket['ticket_id']);
             }
         }
 
-        private function addSaleToDb(Ticket $ticket) {
+        private function addSaleToDb(int $seller_id, int $ticket_id) {
             $stmt = $this->db->prepare('INSERT INTO transactions(date_transactions, seller_id, buyer_id, ticket_id) VALUES (?,?,?,?)');
             $stmt->execute([
                 date('Y-m-d H:i:s'),
-                $ticket->getSellerID(),
+                $seller_id,
                 $_SESSION['user_id'],
-                $ticket->getId()
+                $ticket_id
             ]);
 
-            $this->updateTicket($this->db->lastInsertId(), $ticket->getId());
+            $this->updateTicket($this->db->lastInsertId(), $ticket_id);
         }
 
         private function updateTicket(int $transactionID, int $ticketID) {
@@ -95,4 +95,79 @@
             ]);
         }
 
+        public function showCart() {
+            $data = isset($_POST['cartTickets']) && $_POST['moduleAction'] == 'shoppingCart' ? $this->getTicketsShoppingBag(explode(',' , $_POST['cartTickets'])) : '';
+            echo $this->twig->render('pages/shoppingCart.twig', [
+                'firstname' => $_SESSION['firstName'],
+                'ticketsInCart' => $data
+            ]);
+        }
+
+        private function getTicketsShoppingBag(array $ticketIds) : array {
+            $ticketDetails = [];
+            for($i = 0; $i < count($ticketIds); $i++) {
+                $ticketDetails[] = $this->convertResultToModels($this->getTicketDetails($ticketIds[$i]));
+            }
+
+            return $ticketDetails;
+        }
+
+        protected function getTicketDetails(int $id) : array {
+            $stmt = $this->db->prepare('SELECT *, user_data.name as firstName, events.name as event_name FROM tickets INNER JOIN events ON tickets.event_id=events.event_id INNER JOIN user_data ON tickets.seller_id = user_data.user_id WHERE tickets.ticket_id = ?');
+            $stmt->execute([$id]);
+            return $stmt->fetchAssociative();
+        }
+
+        protected function convertResultToModels(array $result) : array {
+            return [
+                $this->createUserModel($result),
+                $this->createTicketModel($result),
+                $this->createEventModel($result)
+            ];
+        }
+
+        protected function createUserModel(array $result) : User {
+             return new User(
+                $result['user_id'],
+                $result['firstName'],
+                $result['last_name'],
+                $_SESSION['user'],
+                new Address(
+                    $result['address'],
+                    $result['city'],
+                    $result['country']
+                ),
+                $result['friends_invited'],
+                $result['tickets_sold'],
+                [],
+                $result['tickets_bought'],
+                []
+            );
+        }
+
+        protected function createTicketModel (array $result) : Ticket {
+            return new Ticket(
+                $result['ticket_id'],
+                $result['name'],
+                $result['ticket_price'],
+                $result['amount'],
+                $result['sale_reason'],
+                $result['event_id'],
+                $result['seller_id'],
+                $result['firstName'] . ' ' . $result['last_name'],
+                $result['ticket_type']
+            );
+        }
+
+        protected function createEventModel(array $result) : Event {
+            return new Event(
+                $result['event_id'],
+                $result['event_name'],
+                $result['ticketprice_standard'],
+                $result['location'],
+                $result['description'],
+                $result['begin_time'],
+                $result['end_time']
+            );
+        }
     }
