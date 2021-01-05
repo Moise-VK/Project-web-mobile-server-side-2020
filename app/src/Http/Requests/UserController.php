@@ -3,6 +3,7 @@
 
         private $errors = array();
 
+        //Show page
         public function showUserInfoPage () {
             echo $this->twig->render('/pages/users/userdetails.twig', [
                 'user' => $this->getUserDetails(intval($_SESSION['user_id'])),
@@ -15,17 +16,20 @@
                 'firstname' => $_SESSION['firstName']
             ]);
         }
+        //update user info
         public function updateData(){
             $this->setUserData(intval($_SESSION['user_id']));
             header('Location: /user/detail');
             exit();
         }
-
+        //sends mail to given email
         public function sendMailFriend(){
-            $this->setFriendsInvited(intval($_SESSION['user_id']));
-            $this->inviteFriend(intval($_SESSION['user_id']));
-            header('Location: /user/detail');
-            exit();
+            if ($this->checkFilled() == 3){
+                $this->setFriendsInvited(intval($_SESSION['user_id']));
+                $this->inviteFriend(intval($_SESSION['user_id']));
+                $this->checkInvites(intval($_SESSION['user_id']));
+            }
+            $this->showUserInfoPage();
         }
 
 
@@ -127,7 +131,7 @@ ORDER BY transactions.date_transaction DESC LIMIT 3';
 
         private function setFriendsInvited (int $userID): void{
             $friendQuery = 'UPDATE user_data
-            SET friends_invited = friends_invited+1
+            SET friends_invited = friends_invited + 1
             WHERE user_id = ?';
             $friendsInvited = $this->db->prepare($friendQuery);
             $friendsInvited->execute(array($userID));
@@ -144,6 +148,7 @@ ORDER BY transactions.date_transaction DESC LIMIT 3';
             $message .= '<p>Beste ' . $nameFriend .' '. $lastnameFriend. '</p>';
             $message .= '<p>U bent uitgenodigd door ' . $sender . ' om uw evenementtickets te verkopen via onze site </p>';
             $message .= '<p><a href="http://localhost:8080/login">Klik hier</a> om uw tickets te kunnen verkopen</p>';
+            $message .= '<p>Met vele groet het Ticketswap team</p>';
             $message .= '<br><br><p>TicketSwap</p>';
             $message .= '</main>';
 
@@ -207,7 +212,16 @@ ORDER BY transactions.date_transaction DESC LIMIT 3';
 
             return $getNameArr['name'].' '.$getNameArr['last_name'];
         }
-        private function checkFilled(){
+
+        private function getEmailUser($userID): string{
+            $getEmailQuery = 'SELECT email FROM users WHERE user_id = ?';
+            $getEmail = $this->db->prepare($getEmailQuery);
+            $getEmail->execute(array($userID));
+            $email = $getEmail->fetchAssociative();
+            return $email['email'];
+        }
+
+        private function checkFilled(): int{
             $filled = 0;
             if (!empty($this->getNameFriend())){
                 $filled++;
@@ -220,4 +234,50 @@ ORDER BY transactions.date_transaction DESC LIMIT 3';
             }
             return $filled;
         }
+
+        private function checkInvites($userID): void{
+            $checkInvitesQuery = 'SELECT friends_invited FROM user_data WHERE user_id = ?';
+            $checkInvites = $this->db->prepare($checkInvitesQuery);
+            $checkInvites->execute([$userID]);
+            $invites = $checkInvites->fetchAssociative();
+
+            if($invites >= 10){
+                $zeroInvitesQuery = 'UPDATE user_data SET friends_invited = 0 WHERE user_id = ?';
+                $zeroInvites = $this->db->prepare($zeroInvitesQuery);
+                $zeroInvites->execute(array($userID));
+                $this->sendDiscount($userID);
+
+            }
+        }
+
+        private function makeDiscountCode(): string{
+            $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            $discountCode = '';
+
+            for ($i = 0; $i < 10; $i++) {
+                $index = rand(0, strlen($characters) - 1);
+                $discountCode .= $characters[$index];
+            }
+            return $discountCode;
+        }
+
+        private function composeMailDiscount(string $nameUser, string $discountCode) : string{
+            $message = '<main>';
+            $message .= '<h2>TicketSwap</h2>';
+            $message .= '<p>Beste ' . $nameUser . '</p>';
+            $message .= '<p>U heeft 10 mensen uitgenodigd en dus krijgt u een kortingscode.</p>';
+            $message .= '<p>Uw kortings code is <b>'. $discountCode .'</b></p>';
+            $message .= '<p>Deze kortingscode kan u invullen bij het kopen van tickets op onze site en u zal €10 korting krijgen.</p>';
+            $message .= '<p><a href="http://localhost:8080/events">Klik hier</a> om onze beschikbare tickets te bekijken</p>';
+            $message .= '<p>Met vele groet het Ticketswap team</p>';
+            $message .= '<br><br><p>TicketSwap</p>';
+            $message .= '</main>';
+
+            return $message;
+        }
+
+        private function sendDiscount (int $userID): void {
+                $this->mailer->sendMail([$this->getEmailUser($userID)], $this->composeMailDiscount($this->getNameUser($userID), $this->makeDiscountCode() ), '', 'Uw kortingscode voor Ticketswap');
+        }
+
     }
