@@ -38,6 +38,7 @@
             $ticketPrice = isset($_POST['ticketPrice']) ? $_POST['ticketPrice'] : '';
             $ticketAmount = isset($_POST['ticketAmount']) ? $_POST['ticketAmount'] : '';
             $ticketReason = isset($_POST['ticketReason']) ? $_POST['ticketReason'] : '';
+            $ticketType = isset($_POST['ticketSort']) ? $_POST['ticketSort'] : '';
             $exEventId = isset($_POST['exEventId']) ? $_POST['exEventId'] : '';
 
             $eventName = isset($_POST['eventName']) ? $_POST['eventName'] : '';
@@ -50,11 +51,11 @@
             $eventEndMinute = isset($_POST['eventEndMinute']) ? $_POST['eventEndMinute'] : '';
             $eventDescription = isset($_POST['eventDescription']) ? $_POST['eventDescription'] : '';
             if(isset($_POST['typeEvent']) && $_POST['typeEvent'] == 'existing' && $_POST['moduleAction'] == 'createTicket'){
-                $this->createNewTicket($exEventId, $ticketName, $ticketAmount, $ticketReason, $ticketPrice); // PRODUCTION
+                $this->createNewTicket($exEventId, $ticketName, $ticketAmount, $ticketReason, $ticketPrice, $ticketType); // PRODUCTION
                 //$this->returnToOverview('/home');
             } else {
                 $eventID = $this->createNewEvent($eventName, $eventLocation, $eventStartDate, $eventStartHour, $eventStartMinute, $eventEndDate, $eventEndHour, $eventEndMinute, $eventDescription, $ticketPrice);
-                $this->createNewTicket($eventID, $ticketName, $ticketAmount, $ticketReason, $ticketPrice);
+                $this->createNewTicket($eventID, $ticketName, $ticketAmount, $ticketReason, $ticketPrice, $ticketType);
                 //$this->returnToOverview('/home');
             }
         }
@@ -80,18 +81,23 @@
             return $date . ' ' . $hour . ':' . $minute;
         }
 
-        private function createNewTicket($eventID, $name, $amount, $reason, $price) {
-            if($name && $eventID && $amount && $reason && $price) {
+        private function createNewTicket($eventID, $name, $amount, $reason, $price, $ticketType) {
+            if($name && $eventID && $amount && $reason && $price && $ticketType) {
+                $ticketAmount = $amount;
                 $data = [
                     $name,
                     $price,
-                    $amount,
+                    $amount = 1,
                     $reason,
                     $eventID,
-                    $_SESSION['user_id']
+                    $_SESSION['user_id'],
+                    $ticketType
                 ];
-                $this->createTicketInDB($data);
-                $this->procesTicketUpload($this->db->lastInsertId());
+
+                for($i = 0; $i < $ticketAmount; $i++ ){
+                    $this->createTicketInDB($data);
+                    $this->procesTicketUpload($this->db->lastInsertId());
+                }
             } else {
                 $this->showAddScreen();
             }
@@ -104,7 +110,7 @@
         }
 
         private function createTicketInDB(array $data) : int {
-            $stmt = $this->db->prepare('INSERT INTO tickets(name, ticket_price, amount, sale_reason, event_id, seller_id) VALUES (?,?,?,?,?,?)');
+            $stmt = $this->db->prepare('INSERT INTO tickets(name, ticket_price, amount, sale_reason, event_id, seller_id, ticket_type) VALUES (?,?,?,?,?,?,?)');
             $stmt->execute($data);
             return $this->db->lastInsertId();
         }

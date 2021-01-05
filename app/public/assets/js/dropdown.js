@@ -1,9 +1,9 @@
 $(document).ready(function () {
-    $('.dropdown-toggle').mouseover(function() {
+    $('.dropdown-toggle2').mouseover(function() {
         $('.dropdown-menu').show();
     })
 
-    $('.dropdown-toggle').mouseout(function() {
+    $('.dropdown-toggle2').mouseout(function() {
         t = setTimeout(function() {
             $('.dropdown-menu').hide();
         }, 100);
