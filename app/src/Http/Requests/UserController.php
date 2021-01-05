@@ -244,7 +244,7 @@ ORDER BY transactions.date_transaction DESC LIMIT 3';
             if($invites >= 10){
                 $zeroInvitesQuery = 'UPDATE user_data SET friends_invited = 0 WHERE user_id = ?';
                 $zeroInvites = $this->db->prepare($zeroInvitesQuery);
-                $zeroInvites->execute($userID);
+                $zeroInvites->execute(array($userID));
                 $this->sendDiscount($userID);
 
             }
