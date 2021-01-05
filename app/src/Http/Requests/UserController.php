@@ -22,10 +22,11 @@
         }
 
         public function sendMailFriend(){
-            $this->setFriendsInvited(intval($_SESSION['user_id']));
-            $this->inviteFriend(intval($_SESSION['user_id']));
-            header('Location: /user/detail');
-            exit();
+            if ($this->checkFilled() == 3){
+                $this->setFriendsInvited(intval($_SESSION['user_id']));
+                $this->inviteFriend(intval($_SESSION['user_id']));
+            }
+            $this->showUserInfoPage();
         }
 
 
@@ -207,6 +208,7 @@ ORDER BY transactions.date_transaction DESC LIMIT 3';
 
             return $getNameArr['name'].' '.$getNameArr['last_name'];
         }
+
         private function checkFilled(){
             $filled = 0;
             if (!empty($this->getNameFriend())){
@@ -220,4 +222,5 @@ ORDER BY transactions.date_transaction DESC LIMIT 3';
             }
             return $filled;
         }
+
     }
