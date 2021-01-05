@@ -95,15 +95,18 @@
                 </section>
                 <section class="col-6">
                     <h4>Vrienden uitnodigen</h4>
-                    <form action="user/detail/updateData" method="POST" novalidate="" role="form" class="php-email-form">
+                    <form action="detail/inviteFriend" method="POST" novalidate="" role="form" class="php-email-form">
                         <div>
-                            <input type="text" class="form-control mt-2" placeholder="Naam vriend" name="name_friend"/>
+                            <input type="text" class="form-control mt-2" placeholder="Naam vriend" name="name_friend" value="{{name_friend}}"/>
+                            {% if errors['name_friend'] is not empty  %}<div style="font-size: 0.75rem; color: red" class="errorMsg">{{ errors['name_friend'] }}</div>{% endif %}
                         </div>
                         <div>
-                            <input type="text" class="form-control mt-2" placeholder="Achternaam vriend" name="last_name_friend"/>
+                            <input type="text" class="form-control mt-2" placeholder="Achternaam vriend" name="last_name_friend" value="{{lastname_friend}}"/>
+                            {% if errors['last_name_friend'] is not empty  %}<div style="font-size: 0.75rem; color: red" class="errorMsg">{{ errors['last_name_friend'] }}</div>{% endif %}
                         </div>
                         <div>
-                            <input type="email" class="form-control mt-2 form-group" placeholder="Email vriend" name="email_friend"/>
+                            <input type="email" class="form-control mt-2 form-group" placeholder="Email vriend" name="email_friend" value="{{email_friend}}"/>
+                            {% if errors['email_friend'] is not empty  %}<div style="font-size: 0.75rem; color: red" class="errorMsg">{{ errors['email_friend'] }}</div>{% endif %}
                         </div>
                         <div>
                             <button class='btn btn-primary' value="invite" name="invite" type="submit">Nodig vriend uit</button>
