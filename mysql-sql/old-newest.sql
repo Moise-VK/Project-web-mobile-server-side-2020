@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysqldb
--- Gegenereerd op: 02 jan 2021 om 20:30
--- Serverversie: 5.7.31
--- PHP-versie: 7.4.9
+-- Generation Time: Jan 04, 2021 at 10:18 AM
+-- Server version: 5.7.31
+-- PHP Version: 7.4.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -22,14 +22,12 @@ SET time_zone = "+00:00";
 --
 CREATE DATABASE IF NOT EXISTS `ticketswap` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `ticketswap`;
-
 -- --------------------------------------------------------
 
 --
--- Tabelstructuur voor tabel `artists`
+-- Table structure for table `artists`
 --
 
-DROP TABLE IF EXISTS `artists`;
 CREATE TABLE `artists` (
   `artist_id` int(11) NOT NULL,
   `name` varchar(45) NOT NULL,
@@ -41,10 +39,9 @@ CREATE TABLE `artists` (
 -- --------------------------------------------------------
 
 --
--- Tabelstructuur voor tabel `events`
+-- Table structure for table `events`
 --
 
-DROP TABLE IF EXISTS `events`;
 CREATE TABLE `events` (
   `event_id` int(11) NOT NULL,
   `name` varchar(45) NOT NULL,
@@ -56,7 +53,7 @@ CREATE TABLE `events` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Gegevens worden geëxporteerd voor tabel `events`
+-- Dumping data for table `events`
 --
 
 INSERT INTO `events` (`event_id`, `name`, `ticketprice_standard`, `begin_time`, `end_time`, `location`, `description`) VALUES
@@ -71,10 +68,9 @@ INSERT INTO `events` (`event_id`, `name`, `ticketprice_standard`, `begin_time`, 
 -- --------------------------------------------------------
 
 --
--- Tabelstructuur voor tabel `events_has_artists`
+-- Table structure for table `events_has_artists`
 --
 
-DROP TABLE IF EXISTS `events_has_artists`;
 CREATE TABLE `events_has_artists` (
   `event_id` int(11) NOT NULL,
   `artist_id` int(11) NOT NULL
@@ -83,10 +79,9 @@ CREATE TABLE `events_has_artists` (
 -- --------------------------------------------------------
 
 --
--- Tabelstructuur voor tabel `tickets`
+-- Table structure for table `tickets`
 --
 
-DROP TABLE IF EXISTS `tickets`;
 CREATE TABLE `tickets` (
   `ticket_id` int(11) NOT NULL,
   `name` varchar(45) NOT NULL,
@@ -95,16 +90,24 @@ CREATE TABLE `tickets` (
   `sale_reason` varchar(45) NOT NULL,
   `event_id` int(11) NOT NULL,
   `transaction_id` int(11) DEFAULT NULL,
-  `seller_id` int(11) NOT NULL
+  `seller_id` int(11) NOT NULL,
+  `ticket_type` enum('Combiticket','Dagticket','Concert','') NOT NULL DEFAULT 'Concert'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tickets`
+--
+
+INSERT INTO `tickets` (`ticket_id`, `name`, `ticket_price`, `amount`, `sale_reason`, `event_id`, `transaction_id`, `seller_id`, `ticket_type`) VALUES
+(1, 'Combiticket Pukkelpop', 350, 1, 'Deze datum kan ik niet aanwezig zijn', 1, 1, 1, 'Combiticket'),
+(2, 'Combiticket Werchter ', 350, 1, 'Deze datum kan ik niet aanwezig zijn', 2, 4, 1, 'Combiticket');
 
 -- --------------------------------------------------------
 
 --
--- Tabelstructuur voor tabel `transactions`
+-- Table structure for table `transactions`
 --
 
-DROP TABLE IF EXISTS `transactions`;
 CREATE TABLE `transactions` (
   `transaction_id` int(11) NOT NULL,
   `date_transaction` datetime NOT NULL,
@@ -113,13 +116,21 @@ CREATE TABLE `transactions` (
   `ticket_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `transactions`
+--
+
+INSERT INTO `transactions` (`transaction_id`, `date_transaction`, `seller_id`, `buyer_id`, `ticket_id`) VALUES
+(1, '2021-01-03 17:39:35', 1, 14, 1),
+(3, '2021-01-01 12:07:26', 14, 1, 4),
+(4, '2020-12-09 00:04:17', 1, 14, 2);
+
 -- --------------------------------------------------------
 
 --
--- Tabelstructuur voor tabel `users`
+-- Table structure for table `users`
 --
 
-DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `user_id` int(11) NOT NULL,
   `email` varchar(100) NOT NULL,
@@ -127,21 +138,21 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Gegevens worden geëxporteerd voor tabel `users`
+-- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`user_id`, `email`, `password`) VALUES
 (1, 'jonathan@jon-it.be', '$2y$10$UkdaZpTirdlhj615SOw8f.3cxriaXGWDMtWY0iLRCwmAtFGTVNON2'),
 (2, 'pat1@pat.com', '$2y$10$EFUCfhgNzRKoeZmNTrEi4.RnsG6tQFXoixWZ4qRox27JUl6LVtmsy'),
-(13, 'a@a.a', '$2y$10$L2dAhvI3z44wTRcg2q2cGOc5Il39d/YZjJzDkonjXlNwCgvg/hLse');
+(13, 'a@a.a', '$2y$10$L2dAhvI3z44wTRcg2q2cGOc5Il39d/YZjJzDkonjXlNwCgvg/hLse'),
+(14, 'moise.vankeymeulen@student.odisee.be', '$2y$10$psjOr5Eq.R7cISgUiSOh1esqrf/Eg5QDQPu6fK.ZW6xxPfOsgB/Lu');
 
 -- --------------------------------------------------------
 
 --
--- Tabelstructuur voor tabel `user_data`
+-- Table structure for table `user_data`
 --
 
-DROP TABLE IF EXISTS `user_data`;
 CREATE TABLE `user_data` (
   `user_id` int(11) NOT NULL,
   `name` varchar(45) NOT NULL DEFAULT 'Naamloos',
@@ -156,32 +167,33 @@ CREATE TABLE `user_data` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Gegevens worden geëxporteerd voor tabel `user_data`
+-- Dumping data for table `user_data`
 --
 
 INSERT INTO `user_data` (`user_id`, `name`, `last_name`, `friends_invited`, `tickets_sold`, `tickets_bought`, `address`, `city`, `country`, `data_id`) VALUES
 (1, 'Jonathan', 'De Mangelaere', 2, 5, '2', 'Rue du Commerce 32', 'Mamer', 'Luxembourg', 1),
 (2, '', '', NULL, NULL, NULL, '', '', '', 3),
-(13, 'Naamloos', 'Doe', NULL, NULL, NULL, NULL, NULL, NULL, 6);
+(13, 'Naamloos', 'Doe', NULL, NULL, NULL, NULL, NULL, NULL, 6),
+(14, 'Naamloos', 'Doe', NULL, NULL, NULL, NULL, NULL, NULL, 7);
 
 --
--- Indexen voor geëxporteerde tabellen
+-- Indexes for dumped tables
 --
 
 --
--- Indexen voor tabel `artists`
+-- Indexes for table `artists`
 --
 ALTER TABLE `artists`
   ADD PRIMARY KEY (`artist_id`);
 
 --
--- Indexen voor tabel `events`
+-- Indexes for table `events`
 --
 ALTER TABLE `events`
   ADD PRIMARY KEY (`event_id`);
 
 --
--- Indexen voor tabel `events_has_artists`
+-- Indexes for table `events_has_artists`
 --
 ALTER TABLE `events_has_artists`
   ADD PRIMARY KEY (`event_id`,`artist_id`),
@@ -189,7 +201,7 @@ ALTER TABLE `events_has_artists`
   ADD KEY `fk_events_has_artists_events1_idx` (`event_id`);
 
 --
--- Indexen voor tabel `tickets`
+-- Indexes for table `tickets`
 --
 ALTER TABLE `tickets`
   ADD PRIMARY KEY (`ticket_id`),
@@ -197,7 +209,7 @@ ALTER TABLE `tickets`
   ADD KEY `fk_tickets_transactions1_idx` (`transaction_id`);
 
 --
--- Indexen voor tabel `transactions`
+-- Indexes for table `transactions`
 --
 ALTER TABLE `transactions`
   ADD PRIMARY KEY (`transaction_id`),
@@ -205,85 +217,85 @@ ALTER TABLE `transactions`
   ADD KEY `fk_transactions_users2_idx` (`buyer_id`);
 
 --
--- Indexen voor tabel `users`
+-- Indexes for table `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`user_id`);
 
 --
--- Indexen voor tabel `user_data`
+-- Indexes for table `user_data`
 --
 ALTER TABLE `user_data`
   ADD PRIMARY KEY (`data_id`),
   ADD KEY `fk_user_data_users1_idx` (`user_id`);
 
 --
--- AUTO_INCREMENT voor geëxporteerde tabellen
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT voor een tabel `artists`
+-- AUTO_INCREMENT for table `artists`
 --
 ALTER TABLE `artists`
   MODIFY `artist_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT voor een tabel `events`
+-- AUTO_INCREMENT for table `events`
 --
 ALTER TABLE `events`
   MODIFY `event_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT voor een tabel `tickets`
+-- AUTO_INCREMENT for table `tickets`
 --
 ALTER TABLE `tickets`
-  MODIFY `ticket_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ticket_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT voor een tabel `transactions`
+-- AUTO_INCREMENT for table `transactions`
 --
 ALTER TABLE `transactions`
-  MODIFY `transaction_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `transaction_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT voor een tabel `users`
+-- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
--- AUTO_INCREMENT voor een tabel `user_data`
+-- AUTO_INCREMENT for table `user_data`
 --
 ALTER TABLE `user_data`
-  MODIFY `data_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `data_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- Beperkingen voor geëxporteerde tabellen
+-- Constraints for dumped tables
 --
 
 --
--- Beperkingen voor tabel `events_has_artists`
+-- Constraints for table `events_has_artists`
 --
 ALTER TABLE `events_has_artists`
   ADD CONSTRAINT `fk_events_has_artists_artists1` FOREIGN KEY (`artist_id`) REFERENCES `artists` (`artist_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_events_has_artists_events1` FOREIGN KEY (`event_id`) REFERENCES `events` (`event_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Beperkingen voor tabel `tickets`
+-- Constraints for table `tickets`
 --
 ALTER TABLE `tickets`
   ADD CONSTRAINT `fk_tickets_events1` FOREIGN KEY (`event_id`) REFERENCES `events` (`event_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_tickets_transactions1` FOREIGN KEY (`transaction_id`) REFERENCES `transactions` (`transaction_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Beperkingen voor tabel `transactions`
+-- Constraints for table `transactions`
 --
 ALTER TABLE `transactions`
   ADD CONSTRAINT `fk_transactions_users1` FOREIGN KEY (`seller_id`) REFERENCES `users` (`user_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_transactions_users2` FOREIGN KEY (`buyer_id`) REFERENCES `users` (`user_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Beperkingen voor tabel `user_data`
+-- Constraints for table `user_data`
 --
 ALTER TABLE `user_data`
   ADD CONSTRAINT `fk_user_data_users1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
