@@ -17,7 +17,7 @@
         public function sendMail($to, $content, $attachments, $mailSubject) {
 
             $message = (new Swift_Message($mailSubject))
-                ->setFrom(['moise.vankeymeulen@sudent.odisee.be' => 'Ticketswap'])
+                ->setFrom(['jonathan@jon-it.be' => 'Ticketswap'])
                 ->setTo($to)
                 ->setBody($content)
                 ->setContentType('text/html');
