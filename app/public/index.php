@@ -59,6 +59,8 @@
         });
         $router->get('/detail', 'UserController@showUserInfoPage');
         $router->post('/detail/updateData', 'UserController@updateData');
+        $router->post('/detail/inviteFriend', 'UserController@sendMailFriend');
+
     });
 
     $router->mount('/checkout', function () use ($router) {

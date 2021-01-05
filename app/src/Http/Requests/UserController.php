@@ -1,15 +1,29 @@
 <?php
     class UserController extends BaseController {
+
+        private $errors = array();
+
         public function showUserInfoPage () {
             echo $this->twig->render('/pages/users/userdetails.twig', [
                 'user' => $this->getUserDetails(intval($_SESSION['user_id'])),
                 'tickets' => $this->getTicketsInfo(intval($_SESSION['user_id'])),
                 'countries' => $this->getCountries(),
+                'errors' => $this->errors,
+                'name_friend' => $this->getNameFriend(),
+                'lastname_friend' => $this->getLastnameFriend(),
+                'email_friend' => $this->getEmailFriend(),
                 'firstname' => $_SESSION['firstName']
             ]);
         }
         public function updateData(){
             $this->setUserData(intval($_SESSION['user_id']));
+            header('Location: /user/detail');
+            exit();
+        }
+
+        public function sendMailFriend(){
+            $this->setFriendsInvited(intval($_SESSION['user_id']));
+            $this->inviteFriend(intval($_SESSION['user_id']));
             header('Location: /user/detail');
             exit();
         }
@@ -109,5 +123,101 @@ ORDER BY transactions.date_transaction DESC LIMIT 3';
 
             $updateEmail = $this->db->prepare('UPDATE users SET email=? WHERE user_id=?');
             $updateEmail->execute(array($_POST['email'], $userID));
+        }
+
+        private function setFriendsInvited (int $userID): void{
+            $friendQuery = 'UPDATE user_data
+            SET friends_invited = friends_invited+1
+            WHERE user_id = ?';
+            $friendsInvited = $this->db->prepare($friendQuery);
+            $friendsInvited->execute(array($userID));
+        }
+
+        private function inviteFriend (int $userID): void {
+            if ($this->checkFilled() == 3) {
+                $this->mailer->sendMail([$this->getEmailFriend()], $this->composeMailText($this->getNameFriend(), $this->getLastnameFriend(), $this->getNameUser($userID)), '', $this->getNameUser($userID).' nodigt u uit om uw evenementtickets te verkopen op Ticketswap');
+            }
+        }
+        private function composeMailText(string $nameFriend, string $lastnameFriend, string $sender) : string{
+            $message = '<main>';
+            $message .= '<h2>TicketSwap</h2>';
+            $message .= '<p>Beste ' . $nameFriend .' '. $lastnameFriend. '</p>';
+            $message .= '<p>U bent uitgenodigd door ' . $sender . ' om uw evenementtickets te verkopen via onze site </p>';
+            $message .= '<p><a href="http://localhost:8080/login">Klik hier</a> om uw tickets te kunnen verkopen</p>';
+            $message .= '<br><br><p>TicketSwap</p>';
+            $message .= '</main>';
+
+            return $message;
+        }
+
+        private function getNameFriend(): string{
+            if (isset($_POST['name_friend']) && $_POST['name_friend'] !== ''){
+                $name = $_POST['name_friend'];
+                $this->errors['name_friend'] = '';
+            }
+            elseif (isset($_POST['name_friend']) && $_POST['name_friend'] == ''){
+                $name = '';
+                $this->errors['name_friend'] = 'Gelieve de naam van uw vriend in te vullen';
+            }
+            else{
+                $name = '';
+                $this->errors['name_friend'] = '';
+            }
+            return $name;
+        }
+
+        private function getEmailFriend(): string{
+            if (isset($_POST['email_friend']) && $_POST['email_friend'] !== ''){
+                $email = $_POST['email_friend'];
+                $this->errors['email_friend'] = '';
+            }
+            elseif (isset($_POST['email_friend']) && $_POST['email_friend'] == ''){
+                $email = '';
+                $this->errors['email_friend'] = 'Gelieve het mailadres van u vriend in te vullen';
+            }
+            else{
+                $email = '';
+                $this->errors['email_friend'] = '';
+            }
+            return $email;
+        }
+
+        private function getLastnameFriend(): string{
+            if (isset($_POST['last_name_friend']) && $_POST['last_name_friend'] !== ''){
+                $lastName = $_POST['last_name_friend'];
+                $this->errors['last_name_friend'] ='';
+            }
+            elseif (isset($_POST['last_name_friend']) && $_POST['last_name_friend'] == ''){
+                $lastName = '';
+                $this->errors['last_name_friend'] = 'Gelieve de achternaam van uw vriend in te geven';
+
+            }
+            else{
+                $lastName = '';
+                $this->errors['last_name_friend'] ='';
+            }
+            return $lastName;
+        }
+
+        private function getNameUser($userID): string{
+            $getNameQuery = 'SELECT name, last_name FROM user_data WHERE user_id = ?';
+            $getName = $this->db->prepare($getNameQuery);
+            $getName->execute(array($userID));
+            $getNameArr = $getName->fetchAssociative();
+
+            return $getNameArr['name'].' '.$getNameArr['last_name'];
+        }
+        private function checkFilled(){
+            $filled = 0;
+            if (!empty($this->getNameFriend())){
+                $filled++;
+            }
+            if (!empty($this->getEmailFriend())){
+                $filled++;
+            }
+            if (!empty($this->getLastnameFriend())){
+                $filled++;
+            }
+            return $filled;
         }
     }
