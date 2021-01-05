@@ -61,6 +61,21 @@
         $router->post('/detail/updateData', 'UserController@updateData');
     });
 
+    $router->mount('/checkout', function () use ($router) {
+        $router->before('GET|POST', '/.*', function () {
+            if(!isset($_SESSION['user'])){
+                header('Location: /login');
+                exit();
+            }
+        });
+
+        $router->get('', 'CheckoutController@showCheckout');
+
+        $router->post('/personal', 'CheckoutController@processPersonalInformation');
+
+        $router->post('/financial', 'CheckoutController@processFinancial');
+    });
+
     //Login routes
     $router->get('login', 'AuthController@showLoginRegister');
     $router->post('login', 'AuthController@login');
