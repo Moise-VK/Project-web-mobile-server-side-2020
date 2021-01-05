@@ -24,7 +24,8 @@
         public function sendMailFriend(){
             $this->setFriendsInvited(intval($_SESSION['user_id']));
             $this->inviteFriend(intval($_SESSION['user_id']));
-            $this->showUserInfoPage();
+            header('Location: /user/detail');
+            exit();
         }
 
 
