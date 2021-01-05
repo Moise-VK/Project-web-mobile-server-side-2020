@@ -62,7 +62,7 @@
                                     <li>Type ticket: {{ ticket.getTicketType() }}</li>
                                     <li>Verkoper: {{ ticket.getSellerName() }}</li>
                                     <li class="form-group">Reden van verkoop: {{ ticket.getReason() }}</li>
-                                    <li><a class="btn btn-success" href="#">In winkelwagen</a></li>
+                                    <li><div onclick="addToCart({{ ticket.getId() }})" class="btn btn-success">In winkelwagen</div></li>
                                 </ul>
                             </div>
                         </article>

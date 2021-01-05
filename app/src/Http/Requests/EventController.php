@@ -116,19 +116,17 @@
         private function convertArrayToTicket (array $ticketsArr): array{
             $tickets = [];
             foreach ($ticketsArr as $ticket){
-                for ($i=0; $i<$ticket['amount'];$i++){
-                    $tickets[] = new Ticket(
-                        $ticket['ticket_id'],
-                        $ticket['ticket_name'],
-                        $ticket['ticket_price'],
-                        $ticket['amount'],
-                        $ticket['sale_reason'],
-                        $ticket['event_id'],
-                        $ticket['seller_id'],
-                        $ticket['sellerName'].' '.$ticket['sellerLastname'],
-                        $ticket['ticket_type']
-                    );
-                }
+                $tickets[] = new Ticket(
+                    $ticket['ticket_id'],
+                    $ticket['ticket_name'],
+                    $ticket['ticket_price'],
+                    $ticket['amount'],
+                    $ticket['sale_reason'],
+                    $ticket['event_id'],
+                    $ticket['seller_id'],
+                    $ticket['sellerName'] . ' ' . $ticket['sellerLastname'],
+                    $ticket['ticket_type'] != null ? $ticket['ticket_type'] : ''
+                );
             }
             return $tickets;
         }

@@ -34,15 +34,15 @@
                 </div>
 
                 <div id="existingEvent" class="mt-2" style="display: block;">
-                    {% include 'layout/parts/existingEvent.twig' %}
+                    {% include 'layout/parts/createTicketEvent/existingEvent.twig' %}
                 </div>
             <form action="/create/ticket" method="POST" novalidate enctype="multipart/form-data">
                 <div id="newEvent" class="mt-2"  style="display: none;">
-                    {% include 'layout/parts/newEvent.twig' %}
+                    {% include 'layout/parts/createTicketEvent/newEvent.twig' %}
                 </div>
 
                 <div id="ticketDetails" class="mt-2" style="display: block;">
-                    {% include 'layout/parts/ticketDetails.twig' %}
+                    {% include 'layout/parts/createTicketEvent/ticketDetails.twig' %}
                 </div>
             </form>
         </div>
