@@ -16,4 +16,29 @@
         </div>
     </section>
 
+    <section>
+        <div class="row">
+            <div class="col-sm-2"></div>
+            {% if (personalDetails == true) and (paymentDetails == true) %}
+                <div class="col-sm-5">
+                    {% include 'layout/parts/checkout/thankYouNote.twig' %}
+                </div>
+            {% else %}
+                <div class="col-sm-5">
+                    {% if personalDetails == false %}
+                        {% include 'layout/parts/checkout/personalDetails.twig' %}
+                    {% else %}
+                        {% include 'layout/parts/checkout/financialInformation.twig' %}
+                    {% endif %}
+                </div>
+                <div class="col-sm-4">
+                    <h4>Winkelmandje</h4>
+                    {% include 'layout/parts/checkout/shoppingCart.twig' %}
+                </div>
+            {% endif %}
+
+            <div class="col-sm-2"></div>
+
+        </div>
+    </section>
 {% endblock %}

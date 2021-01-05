@@ -1,0 +1,79 @@
+<form class="form" action="/checkout/personal" method="POST">
+
+    <div class="form-group">
+        <label  for="fName" class="col-form-label-sm">Naam</label>
+        <div class="row">
+            <div class="col-sm-6">
+                <input type="text" name="fName" id="fName" value="{{ fName }}" placeholder="voornaam" class="form-control">
+            </div>
+
+            <div class="col-sm-6">
+                <input type="text" name="lastName" id="lastName" value="{{ lastName }}" placeholder="achternaam" class="form-control">
+            </div>
+        </div>
+
+        <div class="form-group mt-2">
+            <label for="email" class="col-form-label-sm">E-mailaddress</label>
+            <input type="text" name="email" id="email" value="{{ email }}" placeholder="someone@somedomain.com" class="form-control">
+        </div>
+
+        <div>
+            <div class="row">
+                <div class="form-group col-sm-6">
+                    <label for="address" class="col-form-label-sm">Adres</label>
+                    <input type="text" name="address" id="address" value="{{ address }}" class="form-control" placeholder="Adres">
+                </div>
+
+                <div class="form-group col-sm-3">
+                    <label for="number" class="col-form-label-sm">Nummer</label>
+                    <input type="number" name="number" id="number" value="{{ number }}" class="form-control" placeholder="1">
+                </div>
+
+                <div class="form-group col-sm-3">
+                    <label for="appnumber" class="col-form-label-sm">Bus</label>
+                    <input type="text" name="appnumber" id="appnumber" value="{{ appnumber }}" class="form-control" placeholder="po box">
+                </div>
+
+            </div>
+        </div>
+
+        <div>
+            <div class="row">
+                <div class="form-group col-sm-4">
+                    <label for="city" class="col-form-label-sm">Gemeente</label>
+                    <input type="text" name="city" id="city" value="{{ city }}" placeholder="Gemeente" class="form-control">
+                </div>
+
+                <div class="form-group col-sm-3">
+                    <label for="postal" class="col-form-label-sm">Postcode</label>
+                    <input type="text" name="postal" id="postal" value="{{ postal }}" class="form-control">
+                </div>
+
+                <div class="form-group col-sm-5">
+                    <label for="country" class="col-form-label-sm">Land</label>
+                    <select name="country" id="country" class="form-control">
+                        {% for count in countries %}
+                            {% if country == count %}
+                                <option value="{{ count }}" selected>{{ count }}</option>
+                            {% else %}
+                                <option value="{{ count }}">{{ count }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-8"></div>
+                <div class="form-group col-sm-4">
+                    <input type="hidden" name="moduleAction" value="checkoutPersonalDetails" />
+                    <input type="submit" name="submit" id="submit" class="btn btn-success" value="Betaalgegevens">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            {% include  'layout/parts/checkout/errors.twig' %}
+        </div>
+    </div>
+</form>

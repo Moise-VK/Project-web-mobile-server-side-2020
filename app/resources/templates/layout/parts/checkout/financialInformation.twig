@@ -1,0 +1,31 @@
+<form action="/checkout/financial" method="POST" class="form">
+    <h3>Betaalwijze</h3>
+    <div class="form-group mt-2">
+        <div class="">
+            <div>
+                <input type="radio" name="paymentMethod" id="MC">
+                <label for="MC">Mastercard/Visa</label>
+            </div>
+
+            <div>
+                <input type="radio" name="paymentMethod" id="BC">
+                <label for="BC">Maestro/ Banccontact</label>
+            </div>
+
+            <div>
+                <input type="radio" name="paymentMethod" id="PP">
+                <label for="PP">PayPal</label>
+            </div>
+
+            <div>
+                <input type="radio" name="paymentMethod" id="OS">
+                <label for="OS">Overschrijving</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <input type="hidden" name="moduleAction" value="paymentMethod">
+        <input type="submit" name="submit" id="submit" class="btn btn-success" value="Betaal">
+    </div>
+</form>
