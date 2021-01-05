@@ -3,109 +3,137 @@
     <h4>Details van het evenement</h4>
 </div>
 
-<div>
+<div class="form-group">
     <label for="eventName">Naam van het evenemet</label>
-    <input type="text" id="eventName" name="eventName" value="{{ eventName }}" placeholder="Naam" >
+    <input type="text" id="eventName" name="eventName" value="{{ eventName }}" placeholder="Naam" class="form-control">
 </div>
 
-<div>
+<div class="form-group">
     <label for="eventLocation">Locatie van het evenement</label>
-    <input type="text" id="eventLocation" name="eventLocation" value="{{ eventLocation }}" placeholder="Locatie">
+    <input type="text" id="eventLocation" name="eventLocation" value="{{ eventLocation }}" placeholder="Locatie" class="form-control">
 </div>
 
-<div>
+<div class="form-group">
     <label for="eventStartDate">Startdatum & uur</label>
-    <input type="date" name="eventStartDate" id="eventStartDate" value="{{ eventStartDate }}">
-    <select name="eventStartHour" id="eventStartHour" value="{{ eventStartHour }}">
-        <option value="00">00</option>
-        <option value="01">01</option>
-        <option value="02">02</option>
-        <option value="03">03</option>
-        <option value="04">04</option>
-        <option value="05">05</option>
-        <option value="06">06</option>
-        <option value="07">07</option>
-        <option value="08">08</option>
-        <option value="09">09</option>
-        <option value="10">10</option>
-        <option value="11">11</option>
-        <option value="12">12</option>
-        <option value="13">13</option>
-        <option value="14">14</option>
-        <option value="15">15</option>
-        <option value="16">16</option>
-        <option value="17">17</option>
-        <option value="18">18</option>
-        <option value="19">19</option>
-        <option value="20">20</option>
-        <option value="21">21</option>
-        <option value="22">22</option>
-        <option value="23">23</option>
-    </select>
-    <select name="eventStartMinute" id="eventStartMinute" value="{{ eventStartMinutes }}">
-        <option value="00">00</option>
-        <option value="05">05</option>
-        <option value="10">10</option>
-        <option value="15">15</option>
-        <option value="20">20</option>
-        <option value="25">25</option>
-        <option value="30">30</option>
-        <option value="35">35</option>
-        <option value="40">40</option>
-        <option value="45">45</option>
-        <option value="50">50</option>
-        <option value="55">55</option>
-    </select>
+    <div class="row">
+        <div class="col-lg-6">
+            <input type="date" name="eventStartDate" class="form-control" id="eventStartDate" value="{{ eventStartDate }}">
+        </div>
+        <div class="col-lg-1">
+            <label for="eventStartHour">U</label>
+        </div>
+        <div class="col-lg-2">
+            <select name="eventStartHour" class="form-control" id="eventStartHour" value="{{ eventStartHour }}">
+            <option value="00">00</option>
+            <option value="01">01</option>
+            <option value="02">02</option>
+            <option value="03">03</option>
+            <option value="04">04</option>
+            <option value="05">05</option>
+            <option value="06">06</option>
+            <option value="07">07</option>
+            <option value="08">08</option>
+            <option value="09">09</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+            <option value="13">13</option>
+            <option value="14">14</option>
+            <option value="15">15</option>
+            <option value="16">16</option>
+            <option value="17">17</option>
+            <option value="18">18</option>
+            <option value="19">19</option>
+            <option value="20">20</option>
+            <option value="21">21</option>
+            <option value="22">22</option>
+            <option value="23">23</option>
+        </select>
+        </div>
+        <div class="col-lg-1">
+            <label for="eventStartMinute">M</label>
+        </div>
+        <div class="col-lg-2">
+            <select name="eventStartMinute" id="eventStartMinute" class="form-control" value="{{ eventStartMinutes }}">
+            <option value="00">00</option>
+            <option value="05">05</option>
+            <option value="10">10</option>
+            <option value="15">15</option>
+            <option value="20">20</option>
+            <option value="25">25</option>
+            <option value="30">30</option>
+            <option value="35">35</option>
+            <option value="40">40</option>
+            <option value="45">45</option>
+            <option value="50">50</option>
+            <option value="55">55</option>
+        </select>
+        </div>
+    </div>
 </div>
 
-<div>
+<div class="form-group">
     <label for="eventStartDate">Einddatum & uur</label>
-    <input type="date" name="eventEndDate" id="eventEndDate" value="{{ eventEndDate }}">
-    <select name="eventEndHour" id="eventEndHour" value="{{ eventEndHour }}">
-        <option value="00">00</option>
-        <option value="01">01</option>
-        <option value="02">02</option>
-        <option value="03">03</option>
-        <option value="04">04</option>
-        <option value="05">05</option>
-        <option value="06">06</option>
-        <option value="07">07</option>
-        <option value="08">08</option>
-        <option value="09">09</option>
-        <option value="10">10</option>
-        <option value="11">11</option>
-        <option value="12">12</option>
-        <option value="13">13</option>
-        <option value="14">14</option>
-        <option value="15">15</option>
-        <option value="16">16</option>
-        <option value="17">17</option>
-        <option value="18">18</option>
-        <option value="19">19</option>
-        <option value="20">20</option>
-        <option value="21">21</option>
-        <option value="22">22</option>
-        <option value="23">23</option>
-    </select>
-    <select name="eventEndMinute" id="eventEndMinute" value="{{ eventEndMinutes }}">
-        <option value="00">00</option>
-        <option value="05">05</option>
-        <option value="10">10</option>
-        <option value="15">15</option>
-        <option value="20">20</option>
-        <option value="25">25</option>
-        <option value="30">30</option>
-        <option value="35">35</option>
-        <option value="40">40</option>
-        <option value="45">45</option>
-        <option value="50">50</option>
-        <option value="55">55</option>
-    </select>
+    <div class="row">
+        <div class="col-lg-6">
+            <input type="date" name="eventEndDate" id="eventEndDate" value="{{ eventEndDate }}" class="form-control">
+        </div>
+        <div class="col-lg-1">
+            <label for="eventEndHour">U</label>
+        </div>
+        <div class="col-lg-2">
+            <select name="eventEndHour" class="form-control" id="eventEndHour" value="{{ eventEndHour }}">
+                <option value="00">00</option>
+                <option value="01">01</option>
+                <option value="02">02</option>
+                <option value="03">03</option>
+                <option value="04">04</option>
+                <option value="05">05</option>
+                <option value="06">06</option>
+                <option value="07">07</option>
+                <option value="08">08</option>
+                <option value="09">09</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                <option value="13">13</option>
+                <option value="14">14</option>
+                <option value="15">15</option>
+                <option value="16">16</option>
+                <option value="17">17</option>
+                <option value="18">18</option>
+                <option value="19">19</option>
+                <option value="20">20</option>
+                <option value="21">21</option>
+                <option value="22">22</option>
+                <option value="23">23</option>
+            </select>
+        </div>
+        <div class="col-lg-1">
+            <label for="eventEndMinute">M</label>
+        </div>
+        <div class="col-lg-2">
+            <select name="eventEndMinute" id="eventEndMinute" class="form-control" value="{{ eventEndMinutes }}">
+                <option value="00">00</option>
+                <option value="05">05</option>
+                <option value="10">10</option>
+                <option value="15">15</option>
+                <option value="20">20</option>
+                <option value="25">25</option>
+                <option value="30">30</option>
+                <option value="35">35</option>
+                <option value="40">40</option>
+                <option value="45">45</option>
+                <option value="50">50</option>
+                <option value="55">55</option>
+            </select>
+        </div>
+    </div>
 </div>
 
-<div>
+<div class="form-group">
     <label for="eventDescription">Beschrijving van het evenement</label>
-    <textarea name="eventDescription" id="eventDescription" placeholder="Beschrijving">{{ eventDescription }}</textarea>
+    <textarea name="eventDescription" id="eventDescription" placeholder="Beschrijving" class="form-control">{{ eventDescription }}</textarea>
 </div>
 
 <div>

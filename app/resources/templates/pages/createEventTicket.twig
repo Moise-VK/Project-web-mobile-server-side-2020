@@ -16,10 +16,11 @@
         </div>
     </section>
     <section>
-        <div class="container">
+        <div class="col-sm-3"></div>
+        <div class="container col-sm-6">
             <!-- CENTER THIS RADIOBUTTON THING -->
 
-                <div class="d-flex" id="eventSelection">
+                <div class="d-flex justify-content-center" id="eventSelection">
                     <div>
                         <input type="radio" id="existing" name="sortEvent" value="existing">
                         <label for="existing"> Bestaand evenement</label>
@@ -31,19 +32,20 @@
                     </div>
                 </div>
 
-                <div id="existingEvent"  style="display: block;">
+                <div id="existingEvent" class="mt-2" style="display: block;">
                     {% include 'layout/parts/existingEvent.twig' %}
                 </div>
             <form action="/create/ticket" method="POST" novalidate enctype="multipart/form-data">
-                <div id="newEvent"  style="display: none;">
+                <div id="newEvent" class="mt-2"  style="display: none;">
                     {% include 'layout/parts/newEvent.twig' %}
                 </div>
 
-                <div id="ticketDetails" style="display: block;">
+                <div id="ticketDetails" class="mt-2" style="display: block;">
                     {% include 'layout/parts/ticketDetails.twig' %}
                 </div>
             </form>
         </div>
+        <div class="col-sm-3"></div>
     </section>
 </main>
     <script src="/assets/js/newTicket.js"></script>

@@ -3,42 +3,48 @@
     <h3>Details van het ticket</h3>
 </div>
 
-<div>
+<div class="form-group">
     <label for="ticketName">Naam ticket</label>
     <input type="hidden" id="exEventId" name="exEventId" value="">
     <input type="hidden" id="typeEvent" name="typeEvent" value="">
-    <input type="text" name="ticketName" id="ticketName" placeholder="Naam" value="{{ ticketName }}">
+    <input type="text" name="ticketName" id="ticketName" placeholder="Naam" class="form-control" value="{{ ticketName }}">
 </div>
 
-<div>
+<div class="form-group">
     <label for="ticketSort">Soort ticket</label>
-    <select id="ticketSort" name="ticketSort">
+    <select id="ticketSort" name="ticketSort" class="form-control">
         <option value="standard">Standaard</option>
         <option value="combi">Combi (meerdaags + camping)</option>
         <option value="day">Dagticket</option>
     </select>
 </div>
 
-<div>
+<div class="form-group">
     <label for="ticketPrice">Prijs per ticket</label>
-    <input type="number" min="0" max="10000" step="0.5" id="ticketPrice" name="ticketPrice" value="{{ ticketPrice }}">
+    <input type="number" min="0" max="10000" step="0.5" id="ticketPrice" name="ticketPrice" value="{{ ticketPrice }}" class="form-control">
 </div>
 
-<div>
+<div class="form-group">
     <label for="ticketAmount">Hoeveel tickets heeft u?</label>
-    <input type="number" min="1" max="10" step="1" id="ticketAmount" name="ticketAmount" value="{{ ticketAmount }}">
+    <input type="number" min="1" max="10" step="1" id="ticketAmount" name="ticketAmount" value="{{ ticketAmount }}" class="form-control">
 </div>
 
-<div>
+<div class="form-group">
     <label for="ticketReason">Geef een reden op</label>
-    <textarea id="ticketReason" name="ticketReason">{{ ticketReason }}</textarea>
+    <textarea id="ticketReason" name="ticketReason" class="form-control">{{ ticketReason }}</textarea>
 </div>
 
-<div>
-    <input type="file" name="ticketFile" id="ticketFile" accept="application/pdf">
+<div class="form-group">
+    <p>Laad uw ticket op</p>
+    <div class="custom-file">
+        <input type="file" class="custom-file-input" name="ticketFile" id="ticketFile" required accept="application/pdf">
+        <label class="custom-file-label" for="ticketFile">Choose file</label>
+    </div>
 </div>
+
+
 
 <div>
     <input type="hidden" name="moduleAction" value="createTicket" />
-    <input type="submit" class="btn btn-success submit" value="Zet te koop">
+    <input type="submit" class="btn btn-success submit mt-3 float-right" value="Zet te koop">
 </div>
