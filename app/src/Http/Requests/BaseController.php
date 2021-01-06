@@ -31,7 +31,7 @@ class BaseController
 
         $this->mailer = new MailService(MAIL_SMTP, MAIL_PORT, MAIL_ENCRYPTION, MAIL_USERNAME, MAIL_PASSWORD);
 
-        //$this->docGenerator = new DocGeneratorService();
+        $this->docGenerator = new DocGeneratorService();
 
     }
 
