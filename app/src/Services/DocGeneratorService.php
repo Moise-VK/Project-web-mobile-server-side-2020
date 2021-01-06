@@ -23,7 +23,7 @@
             $this->db->connect();
         }
         public function genDocument($transactionID){
-            $file = $this->basePath . '/../../storage/transactions/' . $transactionID . '.txt';
+            $file = __DIR__ . '/' . '/../../storage/transactions/' . $transactionID . '.txt';
             $document = new SplFileObject($file, "w");
             $document->fwrite($this->composeDoc($this->getDocData($transactionID)));
         }

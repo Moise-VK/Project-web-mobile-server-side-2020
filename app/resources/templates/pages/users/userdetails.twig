@@ -39,7 +39,7 @@
                                 </div>
                                 <div class="card-footer">
                                     <p>{{ ticket.getBuyDate }}</p>
-                                    <a class='btn btn-primary' href="#" type="submit">Download ticket</a>
+                                    <a class='btn btn-primary' href="/user/ticket/download/{{ ticket.getId() }}" type="submit">Download ticket</a>
                                 </div>
                             </div>
                         {% endfor %}

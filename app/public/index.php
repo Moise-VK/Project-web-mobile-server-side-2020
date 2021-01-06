@@ -58,9 +58,12 @@
                 exit();
             }
         });
+
         $router->get('/detail', 'UserController@showUserInfoPage');
         $router->post('/detail/updateData', 'UserController@updateData');
         $router->post('/detail', 'UserController@sendMailFriend');
+
+        $router->get('ticket/download/(\w+)' , 'DownloadController@downloadTickets');
 
     });
 

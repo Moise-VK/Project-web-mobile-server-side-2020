@@ -90,6 +90,9 @@
             $transactionID = $this->db->lastInsertId();
             $this->updateTicket($transactionID, $ticket_id);
             $this->docGenerator->genDocument($transactionID);
+
+            sleep(5);
+            $this->sendMail($ticket_id . '.pdf', $transactionID . '.txt');
         }
 
         private function updateTicket(int $transactionID, int $ticketID) {
@@ -179,17 +182,18 @@
                 $result['end_time']
             );
         }
-        private function sendMail (): void {
-                $this->mailer->sendMail([$this->email], $this->composeMailText($this->fName, $this->lastName), '', 'Uw tickets van TickSwap');
+
+        private function sendMail (string $ticketPath, string $transactionPath): void {
+                $this->mailer->sendTicketMail([$_SESSION['user']], $this->composeMailText($_SESSION['firstName']), ['ticket' => $ticketPath, 'transaction' => $transactionPath] , 'Uw tickets van TickSwap');
         }
 
-        private function composeMailText(string $fname, string $lastname) : string{
+        private function composeMailText(string $fname) : string{
             $message = '<main>';
             $message .= '<h2>TicketSwap</h2>';
-            $message .= '<p>Beste ' . $fname .' '. $lastname. '</p>';
+            $message .= '<p>Beste ' . $fname . '</p>';
             $message .= '<p>U heeft zojuist tickets gekocht via www.TicketSwap.be </p>';
             $message .= '<p>In de bijlage van het document vind u de tickets en een bewijs dat deze legaal overgekocht zijn.</p>';
-            $message .= '<p>Met vele groet het Ticketswap team</p>';
+            $message .= '<p>Met vriendelijke groet</p> <p>het Ticketswap team</p>';
             $message .= '<br><br><p>TicketSwap</p>';
             $message .= '</main>';
 
