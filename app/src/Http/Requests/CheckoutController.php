@@ -86,8 +86,9 @@
                 $_SESSION['user_id'],
                 $ticket_id
             ]);
-
-            $this->updateTicket($this->db->lastInsertId(), $ticket_id);
+            $transactionID = $this->db->lastInsertId();
+            $this->updateTicket($transactionID, $ticket_id);
+            $this->docGenerator->genDocument($transactionID);
         }
 
         private function updateTicket(int $transactionID, int $ticketID) {
