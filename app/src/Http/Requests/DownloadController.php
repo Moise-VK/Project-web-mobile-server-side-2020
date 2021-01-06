@@ -12,29 +12,24 @@
 
             if(count($data) != 0){
                 $this->downloadTicket($data['ticket_id']);
-                //$this->downloadStatement($data['transaction_id']);
+                $this->downloadStatement($data['transaction_id']);
             }
         }
 
         private function downloadTicket(int $ticketID) {
-            $this->download($this->basePath . '/storage/tickets/' . $ticketID . '.pdf', 'ticket.pdf');
+            $this->download($this->basePath . '/../../storage/tickets/' . $ticketID . '.pdf', 'ticket.pdf', 'application/pdf');
         }
 
         private function downloadStatement(int $transactionID) {
-            $this->download($this->basePath . '/storage/transactions/' . $transactionID . '.txt', 'legalStatement.txt');
+            $this->download($this->basePath . '/../../storage/transactions/' . $transactionID . '.txt', 'legalStatement.txt', 'text/plain');
         }
 
-        private function download(string $file, string $fileName) {
-            $f = fopen($file, 'w');
+        private function download(string $file, string $fileName, string $cType) {
+            $f = fopen($file, 'r');
             fseek($f, 0);
-            header('Content-Description: File Transfer');
-            header('Content-Type: application/octet-stream');
-            header('Content-Disposition: attachment; filename="' . $fileName . '"');
-            header('Content-Transfer-Encoding: binary');
-            header('Connection: Keep-Alive');
-            header('Expires: 0');
-            header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-            header('Pragma: public');
+            header('Content-Type: ' . $cType);
+            header('Content-Disposition: attachment; filename="' . $fileName . '";');
             fpassthru($f);
+
         }
     }

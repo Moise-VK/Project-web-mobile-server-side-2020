@@ -4,7 +4,9 @@
     "doctrine/dbal": "^2.12",
     "twig/twig": "^3.0",
     "bramus/router": "~1.5",
-    "ext-zip": "^1.15"
+    "ext-zip": "^1.15",
+    "smorken/ext-http": "^5.0",
+    "ext-http": "*"
   },
   "autoload": {
     "classmap": ["src/"],
