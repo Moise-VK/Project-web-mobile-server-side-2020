@@ -13,7 +13,7 @@
                 'name_friend' => $this->getNameFriend(),
                 'lastname_friend' => $this->getLastnameFriend(),
                 'email_friend' => $this->getEmailFriend(),
-                'firstname' => $_SESSION['firstName']
+                'firstname' => isset($_SESSION['firstName']) ? $_SESSION : ''
             ]);
         }
         //update user info
@@ -31,7 +31,6 @@
             }
             $this->showUserInfoPage();
         }
-
 
         private function getUserDetails (int $userID): User {
             $stmt = $this->db->prepare('SELECT * FROM users left JOIN user_data ON users.user_id = user_data.user_id WHERE users.user_id = ?');
@@ -142,6 +141,7 @@ ORDER BY transactions.date_transaction DESC LIMIT 3';
                 $this->mailer->sendMail([$this->getEmailFriend()], $this->composeMailText($this->getNameFriend(), $this->getLastnameFriend(), $this->getNameUser($userID)), '', $this->getNameUser($userID).' nodigt u uit om uw evenementtickets te verkopen op Ticketswap');
             }
         }
+
         private function composeMailText(string $nameFriend, string $lastnameFriend, string $sender) : string{
             $message = '<main>';
             $message .= '<h2>TicketSwap</h2>';

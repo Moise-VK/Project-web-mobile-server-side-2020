@@ -3,7 +3,7 @@
     class IndexController extends BaseController {
         public function view(){
             echo $this->twig->render('/pages/index.twig',[
-                'firstname' => $_SESSION['firstName']
+                'firstname' => isset($_SESSION['firstName']) ? $_SESSION : ''
             ]);
         }
     }

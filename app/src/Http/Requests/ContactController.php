@@ -11,7 +11,7 @@
                 'message' => $this->getMessage(),
                 'errors' => $this->errors,
                 'filled' => $this->checkFilled(),
-                'firstname' => $_SESSION['firstName']
+                'firstname' => isset($_SESSION['firstName']) ? $_SESSION : ''
             ]);
 
         }

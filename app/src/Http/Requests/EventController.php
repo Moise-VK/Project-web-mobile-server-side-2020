@@ -7,7 +7,7 @@
                 'locations' => $this->getAllLocations(),
                 'minPrice' => $this->getMinPrice(),
                 'maxPrice' => $this->getMaxPrice(),
-                'firstname' => $_SESSION['firstName']
+                'firstname' => isset($_SESSION['firstName']) ? $_SESSION : ''
             ]);
 
         }
@@ -27,7 +27,7 @@
             echo $this->twig->render('/pages/detailEvent.twig', [
                 'event' => $this->getDetailEvent($id),
                 'tickets' => $this->getTickets($id),
-                'firstname' => $_SESSION['firstName']
+                'firstname' => isset($_SESSION['firstName']) ? $_SESSION : ''
             ]);
 
         }
