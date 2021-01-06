@@ -13,7 +13,7 @@
                 'name_friend' => $this->getNameFriend(),
                 'lastname_friend' => $this->getLastnameFriend(),
                 'email_friend' => $this->getEmailFriend(),
-                'firstname' => isset($_SESSION['firstName']) ? $_SESSION : ''
+                'firstname' => isset($_SESSION['firstName']) ? $_SESSION['firstName'] : ''
             ]);
         }
         //update user info

@@ -3,7 +3,7 @@
     class EventDataController extends BaseController {
         public function showAddScreen () {
             echo $this->twig->render('pages/createEventTicket.twig', [
-                'firstname' => isset($_SESSION['firstName']) ? $_SESSION : '',
+                'firstname' => isset($_SESSION['firstName']) ? $_SESSION['firstName'] : '',
                 //EXISTING EVENT
                 'exEventName' => isset($_POST['exEventName']) ? $_POST['exEventName'] : '',
                 //NEW OR EXISTING

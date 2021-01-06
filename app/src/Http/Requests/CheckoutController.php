@@ -3,7 +3,7 @@
     class CheckoutController extends BaseController {
         public function showCheckout() {
             echo $this->twig->render('pages/checkout.twig' , [
-                'firstname' => isset($_SESSION['firstName']) ? $_SESSION : '',
+                'firstname' => isset($_SESSION['firstName']) ? $_SESSION['firstName'] : '',
 
                 'fName' => isset($_POST['fName']) ? $_POST['fName'] : '',
                 'lastName' => isset($_POST['lastName']) ? $_POST['lastName'] : '',

@@ -7,7 +7,7 @@
                 'locations' => $this->getAllLocations(),
                 'minPrice' => $this->getMinPrice(),
                 'maxPrice' => $this->getMaxPrice(),
-                'firstname' => isset($_SESSION['firstName']) ? $_SESSION : ''
+                'firstname' => isset($_SESSION['firstName']) ? $_SESSION['firstName'] : ''
             ]);
 
         }
