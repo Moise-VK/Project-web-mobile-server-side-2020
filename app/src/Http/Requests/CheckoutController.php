@@ -38,6 +38,7 @@
         private $country = '';
         private $tickets = '';
 
+
         public function processPersonalInformation() {
             $this->fName = isset($_POST['fName']) ? $_POST['fName'] : '';
             $this->lastName = isset($_POST['lastName']) ? $_POST['lastName'] : '';
@@ -176,5 +177,21 @@
                 $result['begin_time'],
                 $result['end_time']
             );
+        }
+        private function sendMail (): void {
+                $this->mailer->sendMail([$this->email], $this->composeMailText($this->fName, $this->lastName), '', 'Uw tickets van TickSwap');
+        }
+
+        private function composeMailText(string $fname, string $lastname) : string{
+            $message = '<main>';
+            $message .= '<h2>TicketSwap</h2>';
+            $message .= '<p>Beste ' . $fname .' '. $lastname. '</p>';
+            $message .= '<p>U heeft zojuist tickets gekocht via www.TicketSwap.be </p>';
+            $message .= '<p>In de bijlage van het document vind u de tickets en een bewijs dat deze legaal overgekocht zijn.</p>';
+            $message .= '<p>Met vele groet het Ticketswap team</p>';
+            $message .= '<br><br><p>TicketSwap</p>';
+            $message .= '</main>';
+
+            return $message;
         }
     }
