@@ -27,7 +27,7 @@
             echo $this->twig->render('/pages/detailEvent.twig', [
                 'event' => $this->getDetailEvent($id),
                 'tickets' => $this->getTickets($id),
-                'firstname' => isset($_SESSION['firstName']) ? $_SESSION : ''
+                'firstname' => isset($_SESSION['firstName']) ? $_SESSION['firstName'] : ''
             ]);
 
         }

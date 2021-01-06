@@ -48,14 +48,9 @@
             $this->city = isset($_POST['city']) ? $_POST['city'] : '';
             $this->postal = isset($_POST['postal']) ? $_POST['postal'] : '';
             $this->country = isset($_POST['country']) ? $_POST['country'] : '';
-            //1,2,3 ( naar arr converteren) [1,2,3]
-            $this->tickets = isset($_POST['tickets']) ? $_POST['tickets'] : '';
 
             if($this->fName && $this->lastName && $this->email && $this->address && $this->number && $this->city && $this->postal && $this->country){
                 $this->persData = true;
-                //$this->mailer->sendMail([$this->email],
-                //                        '',
-                //             'Ticket sold', '');
             } else {
                 $this->persData = false;
             }
@@ -65,18 +60,26 @@
         public function processFinancial () {
             $this->finData = true;
             //ADD DATA TO WRITE IN DB HERE CONVERT TO TICKET
-            $this->addMultipleSalesToDB([]);
-            $this->showCheckout();
+            $tickets = isset($_POST['finalShoppingCart']) ? $this->getTicketsShoppingBag(explode(',', $_POST['finalShoppingCart'])) : [];
+            $this->addMultipleSalesToDB([$tickets]);
+            $this->showThankyou();
+        }
+
+        public function showThankyou() {
+            echo $this->twig->render('pages/thankyou.twig', [
+                'success' => true,
+                'firstname' => $_SESSION['firstName']
+            ]);
         }
 
         private function addMultipleSalesToDB(array $tickets) {
-            foreach($tickets as $ticket){
+            foreach($tickets[0] as $ticket){
                 $this->addSaleToDb($ticket['seller_id'], $ticket['ticket_id']);
             }
         }
 
         private function addSaleToDb(int $seller_id, int $ticket_id) {
-            $stmt = $this->db->prepare('INSERT INTO transactions(date_transactions, seller_id, buyer_id, ticket_id) VALUES (?,?,?,?)');
+            $stmt = $this->db->prepare('INSERT INTO transactions(date_transaction, seller_id, buyer_id, ticket_id) VALUES (?,?,?,?)');
             $stmt->execute([
                 date('Y-m-d H:i:s'),
                 $seller_id,
@@ -99,23 +102,27 @@
             $data = isset($_POST['cartTickets']) && $_POST['moduleAction'] == 'shoppingCart' ? $this->getTicketsShoppingBag(explode(',' , $_POST['cartTickets'])) : '';
             echo $this->twig->render('pages/shoppingCart.twig', [
                 'firstname' => $_SESSION['firstName'],
-                'ticketsInCart' => $data
+                'tickets' => $data
             ]);
         }
 
         private function getTicketsShoppingBag(array $ticketIds) : array {
             $ticketDetails = [];
-            for($i = 0; $i < count($ticketIds); $i++) {
-                $ticketDetails[] = $this->convertResultToModels($this->getTicketDetails($ticketIds[$i]));
+            if($ticketIds[0] != ''){
+                for($i = 0; $i < count($ticketIds); $i++) {
+                    //$ticketDetails[] = $this->convertResultToModels($this->getTicketDetails($ticketIds[$i]));
+                    $ticketDetails[] = $this->getTicketDetails($ticketIds[$i]);
+                }
+                return $ticketDetails;
+            } else {
+                return [];
             }
-
-            return $ticketDetails;
         }
 
         protected function getTicketDetails(int $id) : array {
             $stmt = $this->db->prepare('SELECT *, user_data.name as firstName, events.name as event_name FROM tickets INNER JOIN events ON tickets.event_id=events.event_id INNER JOIN user_data ON tickets.seller_id = user_data.user_id WHERE tickets.ticket_id = ?');
             $stmt->execute([$id]);
-            return $stmt->fetchAssociative();
+            return $stmt->fetchAllAssociative()[0];
         }
 
         protected function convertResultToModels(array $result) : array {

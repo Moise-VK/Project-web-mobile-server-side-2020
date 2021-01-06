@@ -15,28 +15,64 @@
         </div>
     </section>
 
-    <section>
-            <table>
+    <section class="d-flex justify-content-center">
+
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8">
+            <h4>Winkelmandje</h4>
+        {% if tickets|length != 0 %}
+            <table class="table mt-3">
                 <thead>
                     <tr>
+                        <th></th>
                         <th>Ticket</th>
                         <th>Event</th>
                         <th>Verkoper</th>
                         <th>Prijs</th>
-                        <th>Acties</th>
+                        <th class="text-right">Acties</th>
                     </tr>
                 </thead>
 
                 <tbody>
-                {{  }}
-                        <tr>
-                            <td></td>
-                            <td></td>
+                {% set total = 0 %}
+                    {% for count,ticket in tickets %}
+                        <tr id="{{ ticket['ticket_id'] }}">
+                            <td>{{ count + 1 }}</td>
+                            <td>{{ ticket['ticket_id'] }}</td>
+                            <td><a href="/event/{{ ticket['event_id'] }}" target="_blank">{{ ticket['event_name'] }}</a></td>
+                            <td>{{ ticket['firstName'] }} {{ ticket['last_name'] }}</td>
+                            <td class="text-center">€ {{ ticket['ticket_price'] }}</td>
+                            {% set total = total + ticket['ticket_price'] %}
+                            <td class="text-right">
+                                <button onclick="removeTicketFromCart({{ ticket['ticket_id'] }})" class="btn btn-danger"><i class="bx bx-block"></i></button>
+                            </td>
                         </tr>
+                    {% endfor %}
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>Totaal</td>
+                        <td class="text-right">€ <span id="cartTotal">{{ total }}</span></td>
+                    </tr>
 
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><a href="/checkout" class="btn btn-success">Persoonlijke gegevens</a></td>
+                    </tr>
                 </tbody>
             </table>
-
+        {% else %}
+            <p>Geen tickets in het mandje</p>
+            <p>Bekijk <a href="/events">hier</a> de evenementen waarvoor tickets beschikbaar zijn.</p>
+        {% endif %}
+        </div>
+        <div class="col-sm-2"></div>
     </section>
 
 
