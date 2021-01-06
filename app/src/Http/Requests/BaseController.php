@@ -36,7 +36,7 @@ class BaseController
     }
 
     protected function returnToOverview(string $overview){
-        header("Location: /" . $overview);
+        header("Location: http://localhost:8080/" . $overview);
         exit();
     }
 

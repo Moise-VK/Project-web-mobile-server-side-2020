@@ -34,7 +34,6 @@
 
         private function getUserDetails (int $userID): User {
             $stmt = $this->db->prepare('SELECT * FROM users left JOIN user_data ON users.user_id = user_data.user_id WHERE users.user_id = ?');
-            //$stmt->execute([2]);
             $stmt->execute([$userID]);
             $userData = $stmt->fetchAssociative();
             return $this->convertArrayToUserObj($userData);
