@@ -52,12 +52,13 @@
             $eventDescription = isset($_POST['eventDescription']) ? $_POST['eventDescription'] : '';
             if(isset($_POST['typeEvent']) && $_POST['typeEvent'] == 'existing' && $_POST['moduleAction'] == 'createTicket'){
                 $this->createNewTicket($exEventId, $ticketName, $ticketAmount, $ticketReason, $ticketPrice, $ticketType); // PRODUCTION
-                //$this->returnToOverview('/home');
+                $this->returnToOverview('/home');
             } else {
                 $eventID = $this->createNewEvent($eventName, $eventLocation, $eventStartDate, $eventStartHour, $eventStartMinute, $eventEndDate, $eventEndHour, $eventEndMinute, $eventDescription, $ticketPrice);
                 $this->createNewTicket($eventID, $ticketName, $ticketAmount, $ticketReason, $ticketPrice, $ticketType);
-                //$this->returnToOverview('/home');
+                $this->returnToOverview('/home');
             }
+
         }
 
         private function createNewEvent(string $eventName, string $eventLocation, string $eventStartDate, string $eventStartHour, string $eventStartMinute, string $eventEndDate, string $eventEndHour, string $eventEndMinute, string $eventDescription, string $ticketPrice) : int {
