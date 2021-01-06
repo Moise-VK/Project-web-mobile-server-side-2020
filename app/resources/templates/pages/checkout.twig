@@ -25,6 +25,7 @@
                 </div>
             {% else %}
                 <div class="col-sm-5">
+                    <h3 class="d-inline-block">Winkelmandje</h3>
                     {% if personalDetails == false %}
                         {% include 'layout/parts/checkout/personalDetails.twig' %}
                     {% else %}
@@ -32,7 +33,6 @@
                     {% endif %}
                 </div>
                 <div class="col-sm-4">
-                    <h4>Winkelmandje</h4>
                     {% include 'layout/parts/checkout/shoppingCart.twig' %}
                 </div>
             {% endif %}
